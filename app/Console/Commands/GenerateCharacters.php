@@ -160,6 +160,6 @@ class GenerateCharacters extends Command
             }
         }
 
-
+        // pointless change to test git
     }
 }
