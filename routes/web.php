@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OpenAIController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\BlackJackController;
+use App\Http\Controllers\TVSetController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,6 +33,9 @@ Route::get("/scenarios", function () {
 });
 
 Route::get("/character/{id}", [CharacterController::class, 'show'])->name('character.show');
- 
+
+Route::get("/blackjack", [BlackJackController::class, 'start'])->name('blackjack.start');
+
+Route::get("tvset", [TVSetController::class, 'show'])->name('tvset.show');
 
 require __DIR__.'/auth.php';

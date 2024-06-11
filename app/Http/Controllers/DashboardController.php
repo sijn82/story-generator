@@ -12,7 +12,6 @@ class DashboardController extends Controller
         $characters = $user->characters;
         
         return Inertia::render('Dashboard', [
-            
             'characters' => $characters,
         ]);
     }
