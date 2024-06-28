@@ -15,6 +15,12 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            backgroundImage: theme => ({
+                    'Hearts': "url('storage/images/Hearts.svg')",
+                    'Clubs': "url('storage/images/Clubs.svg')",
+                    'Diamonds': "url('storage/images/Diamonds.svg')",
+                    'Spades': "url('storage/images/Spades.svg')",
+            })
         },
     },
 

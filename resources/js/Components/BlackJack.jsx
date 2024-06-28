@@ -1,9 +1,11 @@
 import CardHand from "@/Components/CardHand";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useEffect, useState } from "react";
+import TVDials from "./TVDials";
+import GameOver from "./GameOver";
 
 
-export default function BlackJack({deck, zoom = false}) {
+export default function BlackJack({deck, zoom = false, setZoom = null, highScores}) {
 
     const [currentDeck, setCurrentDeck] = useState(deck);
     const freshDeck = deck; // resets the deck to the original deck
@@ -12,7 +14,7 @@ export default function BlackJack({deck, zoom = false}) {
     const [bet, setBet] = useState(100);
     const [chipStack, setChipStack] = useState(5000);
     const [playerSticking, setPlayerSticking] = useState(false);
-    const [roundComplete, setRoundComplete] = useState(false);
+    const [roundComplete, setRoundComplete] = useState(true);
     const [gameStatus, setGameStatus] = useState('Ready');
     const [gameOver, setGameOver] = useState(false);
 
@@ -60,9 +62,9 @@ export default function BlackJack({deck, zoom = false}) {
             let currentTotal = hand?.reduce((acc, card) => {
 
                 if (card.in_play) {
-                    if (card.name === 'King' || card.name === 'Queen' || card.name === 'Jack') {
+                    if (card.name === 'K' || card.name === 'Q' || card.name === 'J') {
                         acc = acc + 10;
-                    } else if (card.name === 'Ace') {
+                    } else if (card.name === 'A') {
                         // rather than calculate whether to add 11 or 1, we'll just add 11
                         // and then evaluate the total later
                         acc = acc + 11;
@@ -78,9 +80,9 @@ export default function BlackJack({deck, zoom = false}) {
             }, 0);
 
             // if the total is greater than 21, we need to re-evaluate the aces
-            if (currentTotal > 21 && hand?.filter(card => card.name === 'Ace').length > 0) {
+            if (currentTotal > 21 && hand?.filter(card => card.name === 'A').length > 0) {
                 
-                let acesInHand = hand?.filter(card => card.name === 'Ace')
+                let acesInHand = hand?.filter(card => card.name === 'A')
                 // reduce the value of the first ace to 1 and recalculate the total
                 // if the total is still greater than 21, reduce the value of the second ace
                 // and recalculate the total etc.
@@ -98,6 +100,11 @@ export default function BlackJack({deck, zoom = false}) {
 
     const dealHand = (deck) => {
 
+        // if the player has no chips left, the game is over
+        if (chipStack <= 0) {
+            setGameOver(true);
+            return;
+        }
         // reset the dealer and player hands
         setDealerHand([]);
         setPlayerHand([]);
@@ -195,6 +202,7 @@ export default function BlackJack({deck, zoom = false}) {
                 
             }
 
+
             setRoundComplete(true);
             resetDeck();
 
@@ -213,12 +221,17 @@ export default function BlackJack({deck, zoom = false}) {
 
     useEffect(() => {
         shuffleDeck(currentDeck);
+        if (bet > chipStack && roundComplete) {
+            console.log("bet: " + bet + " greater than chipstack: " + chipStack + " setting bet to chipStack");
+            setBet(chipStack);
+        }
     }, [roundComplete]);
 
     useEffect(() => {
         if (chipStack <= 0 && roundComplete) {
             setGameOver(true);
         }
+
     }, [chipStack, roundComplete]);
 
     useEffect(() => {
@@ -237,86 +250,84 @@ export default function BlackJack({deck, zoom = false}) {
     }, [playerHand]);
 
     return (
-        <div className="h-full flex-col flex text-sm">
-            {/* <div className="h-full"> */}
-                <div className="">
-                    <h1 className="font-bold text-center text-gray-600 text-3xl py-3">Black Jack</h1>
+        <div className="h-full flex-col flex text-sm justify-center items-center">
+
+            {zoom && 
+                <div className="m-1 flex justify-center text-gray-700">
+                    <button className=" border-2 p-1" onClick={() => setZoom(zoom => !zoom)}>Exit Full Screen</button>
+                </div>}
+            {gameOver ? <GameOver gameStatus={gameStatus} chipStack={chipStack} highScores={highScores} />
+                :
+            <div className={`mx-3 p-2 grid grid-cols-4 gap-3 lg:gap-2`}>
+                <div className="flex flex-col  col-span-2  border-gray-200 p-1">
+                    <h2 className="mx-1 font-bold text-gray-600">Game Status</h2>
+                    <div className="w-full h-full border border-2 p-1 flex justify-center items-center bg-white">
+                        <p className="flex mx-1 font-bold text-gray-600">{gameStatus}</p>
+                    </div>
                 </div>
-                {gameOver ? 
-                <div className="border border-2 flex h-full items-center justify-center">
-                    <div className="">
-                        <div className="mx-4 flex justify-start border border-2 p-3 items-center bg-white">
-                            <h2 className="mx-4 flex font-bold text-gray-600">Game Status: <span className="flex mx-2 text-lg font-bold text-gray-600 items-center">{gameStatus}</span></h2>
-                            {/* <h2 className="mx-4 flex">Round Complete: <span className="flex mx-2 text-4xl font-bold text-gray-600">{roundComplete ? "true" : "false"}</span></h2> */}
-                        </div>
-                        <h2 className="mx-4 flex border border-2 p-3 font-bold text-gray-600">Chip Stack: <span className="flex mx-2 text-lg font-bold text-gray-600">{chipStack}</span></h2>
-                        <h1 className="font-bold text-center text-gray-600 text-4xl py-4">Game Over</h1>
+                <div className="flex justify-center items-center">
+                    <FormControl size="small">
+                        <InputLabel id="bet-select-label">Bet</InputLabel>
+                        <Select
+                            sx={{backgroundColor: 'white'}}
+                            labelId="bet-select-label"
+                            id="bet-select"
+                            value={bet > chipStack && roundComplete ? chipStack : bet}
+                            label="Bet"
+                            onChange={selectBetValue}
+                            disabled={!roundComplete}
+                        >
+                            <MenuItem disabled={chipStack < 100} value={100}>100</MenuItem>
+                            <MenuItem disabled={chipStack < 200} value={200}>200</MenuItem>
+                            <MenuItem disabled={chipStack < 300} value={300}>300</MenuItem>
+                            <MenuItem disabled={chipStack < 400} value={400}>400</MenuItem>
+                            <MenuItem disabled={chipStack < 500} value={500}>500</MenuItem>
+                            <MenuItem disabled={chipStack < 600} value={600}>600</MenuItem>
+                            <MenuItem disabled={chipStack < 700} value={700}>700</MenuItem>
+                            <MenuItem disabled={chipStack < 800} value={800}>800</MenuItem>
+                            <MenuItem disabled={chipStack < 900} value={900}>900</MenuItem>
+                            <MenuItem disabled={chipStack < 1000} value={1000}>1000</MenuItem>
+                            
+                        </Select>
+                    </FormControl>
+                    <button className="m-3 rounded-full btn border-2 bg-cyan-500 text-white font-bold py-1 px-2 aspect-square w-20 h-20" 
+                        onClick={() => {
+                            setGameOver(true); 
+                        }}
+                    >Cash Out</button>
+                </div>
+                {/* Righthand side chip count and actions column */}
+                <div className="flex flex-col items-center row-span-2 my-1 border border-2 p-1 justify-between">
+                    <h2 className="text-center text-gray-700 font-bold"> Chip Stack </h2>
+                    <div className=" mx-1 flex border border-2 p-2 font-bold text-gray-600 bg-white justify-center items-center">
+                        <p className="flex mx-2 text-xl font-bold text-gray-600">{chipStack}</p>
                     </div>
-                </div> :
-                <div className="mx-3 border border-2 p-2">
-                    <div className="flex justify-between border border-2 border-gray-200 p-1">
-                        <div className="mx-1 grid grid-rows-2 justify-start border border-2 p-1 items-center bg-white">
-                            <h2 className="mx-1 flex font-bold text-gray-600 border-b-2">Game Status </h2>
-                            <p className="flex mx-1 font-bold text-gray-600 items-center">{gameStatus}</p>
-                            {/* <h2 className="mx-4 flex">Round Complete: <span className="flex mx-2 text-4xl font-bold text-gray-600">{roundComplete ? "true" : "false"}</span></h2> */}
-                        </div>
-                        {/* <div className="mx-2 flex justify-end items-center"> */}
-                            {/* <h2 className="mx-4 flex">Bet: <span className="flex mx-2 text-4xl font-bold text-gray-600">{bet}</span></h2> */}
-                            <FormControl size="small">
-                                <InputLabel id="bet-select-label">Bet</InputLabel>
-                                <Select
-                                    sx={{backgroundColor: 'white'}}
-                                    labelId="bet-select-label"
-                                    id="bet-select"
-                                    value={bet}
-                                    label="Bet"
-                                    onChange={selectBetValue}
-                                >
-                                    { chipStack >= 100 && <MenuItem value={100}>100</MenuItem> }
-                                    { chipStack >= 200 && <MenuItem value={200}>200</MenuItem> }
-                                    { chipStack >= 300 && <MenuItem value={300}>300</MenuItem> }
-                                    { chipStack >= 400 && <MenuItem value={400}>400</MenuItem> }
-                                    { chipStack >= 500 && <MenuItem value={500}>500</MenuItem> }
-                                    { chipStack >= 600 && <MenuItem value={600}>600</MenuItem> }
-                                    { chipStack >= 700 && <MenuItem value={700}>700</MenuItem> }
-                                    { chipStack >= 800 && <MenuItem value={800}>800</MenuItem> }
-                                    { chipStack >= 900 && <MenuItem value={900}>900</MenuItem> }
-                                    { chipStack >= 1000 && <MenuItem value={1000}>1000</MenuItem> }
-                                    
-                                </Select>
-                            </FormControl>
-                            <div className="grid grid-rows-2 mx-1 flex border border-2 p-1 font-bold text-gray-600 bg-white items-center">
-                                <h2 className="border-b-2 flex"> Chip Stack </h2>
-                                <p className="flex mx-2 text-xl font-bold text-gray-600">{chipStack}</p>
-                            </div>
-                        {/* </div> */}
-                    </div>
-                    <div className="flex my-1 border border-2 p-1 justify-between">
-                        <h2 className=" ml-2 p-2 border border-2 font-bold text-gray-600">Deck:</h2>
-                        {/* <button className="ml-3 btn bg-blue-500 text-white font-bold py-2 px-4 rounded"
-                            onClick={() => shuffleDeck(currentDeck)}
-                        >Shuffle</button> */}
-                        <button className="ml-3 btn bg-sky-900 text-white font-bold py-1 px-2 w-1/4" 
-                            onClick={() => {
-                                dealHand(currentDeck); 
-                            }}
-                        >Deal</button>
-                        {/* <div className="flex"> */}
-                        <button className="ml-3 btn bg-rose-900 disabled:bg-rose-200 text-white font-bold py-1 px-2 w-1/4" 
+                    {/* Deck */}
+                    <h2 className="m-2 p-2 border border-2 font-bold text-center text-gray-600">Deck</h2>
+                    {/* Action Buttons */}
+                    <button className="m-3 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white font-bold py-1 px-2 aspect-square w-20 h-20" 
+                        onClick={() => {
+                            dealHand(currentDeck); 
+                        }}
+                        disabled={!roundComplete}
+                    >Deal</button>
+                    <button className="m-3 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white font-bold py-1 px-2 aspect-square w-20 h-20" 
+                    disabled={playerSticking}
+                        onClick={() => 
+                            dealCard(currentDeck, "Player", true)
+                        }
+                    >Hit</button>
+                    <button className="m-3 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white font-bold py-1 px-2 aspect-square w-20 h-20" 
                         disabled={playerSticking}
-                            onClick={() => 
-                                dealCard(currentDeck, "Player", true)
-                            }
-                        >Hit</button>
-                        <button className="ml-3 btn bg-teal-900 disabled:bg-teal-200 text-white font-bold py-1 px-2 w-1/4" 
-                            disabled={playerSticking}
-                            onClick={() => {
-                                setPlayerSticking(true); 
-                                playDealerHandAndDetermineWhoWins()
-                            }}
-                        >Stick</button>
-                    {/* </div> */}
-                    </div>
+                        onClick={() => {
+                            setPlayerSticking(true); 
+                            playDealerHandAndDetermineWhoWins()
+                        }}
+                    >Stick</button>
+
+                </div>
+                {/* Player/Dealer cards */}
+                <div className={`col-span-3`}>
                     <CardHand 
                         hand={playerHand} 
                         player="Player" 
@@ -340,19 +351,8 @@ export default function BlackJack({deck, zoom = false}) {
                         currentDeck={currentDeck} 
                         zoom={zoom}
                     />
-                    {/* <div className="my-5">
-                        <h2 className="mx-2 my-5">Remaining Deck</h2>
-                        <div className="mx-auto flex flex-wrap gap-3 mx-5">
-                            {currentDeck?.map((card) => (
-                                <div className="p-2 rounded border border-grey-600" key={card.id}>
-                                    <p>{card.name} of {card.suit}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div> */}
-                    
-                </div>}
-            {/* </div> */}
+                </div>
+            </div>}
         </div>
         
     )

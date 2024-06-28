@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\CardDeck;
+use App\Models\HighScore;
 
 class TVSetController extends Controller
 {
@@ -11,6 +12,8 @@ class TVSetController extends Controller
     {
         // $this->deck = new CardDeck(); // not yet, I'm happy to reuse the first card deck for now
         $this->deck = CardDeck::first();
+        // i'd rather this wasn't hardcoded to blackjack
+        $this->high_scores = HighScore::where('type', 'blackjack')->orderBy('score', 'desc')->limit(10)->get();
     }
 
     public function show()
@@ -20,6 +23,7 @@ class TVSetController extends Controller
 
         return Inertia::render('TVSet', [
             'deck' => $deck,
+            'high_scores' => $this->high_scores,
             // 'playerHand' => $playerHand,
             // 'dealerHand' => $dealerHand,
             // 'playerScore' => $playerScore,
