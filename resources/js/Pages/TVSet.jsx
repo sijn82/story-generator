@@ -13,7 +13,7 @@ export default function TVSet({ auth, tvShow, deck, high_scores }) {
 
     return (
         <div className="h-screen flex flex-col" >
-            <div className="flex h-full border border-2 m-5 p-5 bg-[url('storage/images/chevrons.svg')]">
+            <div className="flex h-full border border-2 m-5 p-5 bg-[url('https://sijn-portfolio.s3.eu-west-2.amazonaws.com/chevrons.svg')]">
                 {
                     zoom ? 
                     <div className="flex h-full w-screen">
@@ -45,7 +45,7 @@ export default function TVSet({ auth, tvShow, deck, high_scores }) {
                     </div>
                     
                     :
-                    <div id="outer-case" className="h-full relative aspect-square m-auto border border-2 border-red-900 rounded-lg p-12 bg-[url('storage/images/woodeffect.svg')]">
+                    <div id="outer-case" className={`h-full relative aspect-square m-auto border border-2 border-red-900 rounded-lg p-12 bg-[url('https://sijn-portfolio.s3.eu-west-2.amazonaws.com/woodeffect.svg')]`}>
                       
                         <div id="left-case-trim" className="absolute inset-y-0 left-6 w-0.5 bg-gray-400"></div>
                           
@@ -75,7 +75,7 @@ export default function TVSet({ auth, tvShow, deck, high_scores }) {
                                     </div>
                                 </div>
                             </div>
-                            <div id="bottom-grill" className={`row-span-3 border-t border-t-2 border-red-900 bg-[url('storage/images/crosshatch.svg')]`}>
+                            <div id="bottom-grill" className={`row-span-3 border-t border-t-2 border-red-900 bg-[url('https://sijn-portfolio.s3.eu-west-2.amazonaws.com/crosshatch.svg')]`}>
                                 <TVDials 
                                     turnedOn={turnedOn} 
                                     setTurnedOn={setTurnedOn} 

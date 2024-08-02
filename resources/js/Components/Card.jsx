@@ -10,7 +10,7 @@ export default function Card({card, showCard, setHand, zoom}) {
             }>
                 <div className={`relative flex`}>
                     <div 
-                        style={{ backgroundImage: `url('storage/images/${card.suit}.svg')` }} 
+                        style={{ backgroundImage: `url('https://sijn-portfolio.s3.eu-west-2.amazonaws.com/${card.suit}.svg')` }} 
                         className={` bg-no-repeat absolute bg-contain top-0 right-0 h-8 w-8`}>
 
                     </div>
