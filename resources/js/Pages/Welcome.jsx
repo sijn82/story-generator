@@ -56,9 +56,9 @@ export default function Welcome({ auth }) {
                                 
                                 <h1 className="text-4xl font-bold leading-tight lg:text-5xl flex justify-center items-center">
                                     <Typewriter
-                                        text="Sijn.co.uk" 
+                                        text="sijn.co.uk" 
                                         textDelay={200} 
-                                        additionalText="Lab Days" 
+                                        additionalText="Portfolio" 
                                         additionalTextDelay={100} 
                                         setCompleted={setIsExploding}
                                     />
