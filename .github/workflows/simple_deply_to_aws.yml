@@ -24,10 +24,12 @@ jobs:
           REMOTE_USER: ${{ secrets.EC2_USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
       
-      - name: Install npm dependencies
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          
+      - name: Install dependencies
         run: npm install
 
       - name: Build frontend code
