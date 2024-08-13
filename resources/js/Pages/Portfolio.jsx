@@ -8,7 +8,10 @@ export default function Portfolio() {
         <div>
             <div className="text-center font-bold text-xl my-12">Portfolio Projects</div>
             <div className="text-center">
-                Hey, thanks for taking a look! The number of items in this list will slowly build over time as I add more little projects.
+                Hey, thanks for taking a look! Apologies for the lack of "wow factor", as you can probably tell this page was quickly assembled so you had somewhere to go. 
+                The number of items in this list will slowly build over time as I add more projects but for now you can click the link to check out Black Jack.  
+                As a side note, after building the Black Jack game I prioritised expanding my AWS experience; setting this site up in an ECS2 instance with an RDS MYSQL database and S3 bucket for storage.  
+                I'm also using Github Actions for automated deployment.  Now that the infrastructure is in place and you have something to look at, I'm looking forward to adding the "wow".
             </div>
             <div>
                 <PortfolioItem
