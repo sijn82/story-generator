@@ -32,6 +32,12 @@ export default function Welcome({ auth }) {
                         ) : (
                             <>
                                 <Link
+                                        href={route('portfolio')}
+                                        className="rounded-md px-3 py-2 font-bold text-black/50 ring-1 ring-transparent transition hover:text-orange-400 focus:outline-none focus-visible:ring-[#FF2D20]"
+                                >
+                                    Portfolio
+                                </Link>
+                                <Link
                                     href={route('login')}
                                     className="rounded-md px-3 py-2 font-bold text-black/50 ring-1 ring-transparent transition hover:text-green-400 focus:outline-none focus-visible:ring-[#FF2D20]"
                                 >
@@ -58,11 +64,11 @@ export default function Welcome({ auth }) {
                                     <Typewriter
                                         text="sijn.co.uk" 
                                         textDelay={200} 
-                                        additionalText="Portfolio" 
+                                        additionalText="Lab Days" 
                                         additionalTextDelay={100} 
-                                        setCompleted={setIsExploding}
+                                        // setCompleted={setIsExploding}
                                     />
-                                    {isExploding && <ConfettiExplosion />}
+                                    {/* {isExploding && <ConfettiExplosion />} */}
                                 </h1>
                             
                                 <div>

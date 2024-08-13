@@ -33,6 +33,10 @@ Route::get("/scenarios", function () {
     return $openAIController->openAIRequest("scenario", 3, "Come up with some story scenarios for a game. Use the provided JSON schema. The scenarios should be unique and interesting. Where the title is the title of the scenario and the description is a brief description of the scenario.");
 });
 
+Route::get("portfolio", function() {
+    return Inertia::render('Portfolio');
+})->name('portfolio');
+
 Route::get("/character/{id}", [CharacterController::class, 'show'])->name('character.show');
 
 Route::get("/blackjack", [BlackJackController::class, 'start'])->name('blackjack.start');

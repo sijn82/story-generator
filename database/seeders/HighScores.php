@@ -17,7 +17,7 @@ class HighScores extends Seeder
             ['user_id' => null, 'type' => 'blackjack', 'score' => 5400, 'name' => 'Jessie James'],
             ['user_id' => null, 'type' => 'blackjack', 'score' => 5500, 'name' => 'Wyatt Earp'],
             ['user_id' => null, 'type' => 'blackjack', 'score' => 5600, 'name' => 'Annie Oakley'],
-            ['user_id' => null, 'type' => 'blackjack', 'score' => 5700, 'name' => 'Buth Cassidy'],
+            ['user_id' => null, 'type' => 'blackjack', 'score' => 5700, 'name' => 'Butch Cassidy'],
             ['user_id' => null, 'type' => 'blackjack', 'score' => 5800, 'name' => 'Buffalo Bill'],
             ['user_id' => null, 'type' => 'blackjack', 'score' => 5900, 'name' => 'Wild Bill Hickok'],
             ['user_id' => null, 'type' => 'blackjack', 'score' => 6000, 'name' => 'Billy the Kid'],

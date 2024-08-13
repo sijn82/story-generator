@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { router } from '@inertiajs/react'
+import ConfettiExplosion from 'react-confetti-explosion';
 
 export default function GameOver({gameStatus, chipStack, highScores, auth = null}) {
 
@@ -72,7 +73,7 @@ export default function GameOver({gameStatus, chipStack, highScores, auth = null
                                 <button className="border border-2 p-2 mt-2 rounded bg-cyan-600 text-white mx-auto" onClick={submitHighScore}>Submit</button>
                             </div>
                         </div>
-                        
+                        <ConfettiExplosion />
                     </div> :
                     <div id="highscores">
                     <h2 className="font-bold text-gray-600 text-xl text-center mb-3">High Scores</h2>
