@@ -13,7 +13,7 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
     const [dealerHand, setDealerHand] = useState([]);
     const [bet, setBet] = useState(100);
     const [chipStack, setChipStack] = useState(5000);
-    const [playerSticking, setPlayerSticking] = useState(false);
+    const [playerSticking, setPlayerSticking] = useState(true);
     const [roundComplete, setRoundComplete] = useState(true);
     const [gameStatus, setGameStatus] = useState('Ready');
     const [gameOver, setGameOver] = useState(false);
@@ -258,14 +258,15 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
                 </div>}
             {gameOver ? <GameOver gameStatus={gameStatus} chipStack={chipStack} highScores={highScores} />
                 :
-            <div className={`mx-3 p-2 grid grid-cols-4 gap-3 lg:gap-2`}>
-                <div className="flex flex-col  col-span-2  border-gray-200 p-1">
+            <div className={`mx-3 p-2 grid grid-cols-4 lg:gap-3 gap-2`}>
+            
+                <div className="flex flex-col  max-h-20 lg:max-h-32 col-span-2  border-gray-200 p-1">
                     <h2 className="mx-1 font-bold text-gray-600">Game Status</h2>
                     <div className="w-full h-full border border-2 p-1 flex justify-center items-center bg-white">
                         <p className="flex mx-1 font-bold text-gray-600">{gameStatus}</p>
                     </div>
                 </div>
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center max-h-20 lg:max-h-32">
                     <FormControl size="small">
                         <InputLabel id="bet-select-label">Bet</InputLabel>
                         <Select
@@ -290,34 +291,34 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
                             
                         </Select>
                     </FormControl>
-                    <button className="m-3 rounded-full btn border-2 bg-cyan-500 text-white font-bold py-1 px-2 aspect-square w-20 h-20" 
+                    <button className="m-3 rounded-full btn border-2 bg-cyan-500 text-white text-xs lg:text-md font-bold py-1 px-2 aspect-square" 
                         onClick={() => {
                             setGameOver(true); 
                         }}
                     >Cash Out</button>
                 </div>
                 {/* Righthand side chip count and actions column */}
-                <div className="flex flex-col items-center row-span-2 my-1 border border-2 p-1 justify-between">
+                <div className="flex flex-col items-center row-span-3 my-1 border border-2 p-1 justify-between">
                     <h2 className="text-center text-gray-700 font-bold"> Chip Stack </h2>
                     <div className=" mx-1 flex border border-2 p-2 font-bold text-gray-600 bg-white justify-center items-center">
-                        <p className="flex mx-2 text-xl font-bold text-gray-600">{chipStack}</p>
+                        <p className="flex mx-2 lg:text-xl text-sm font-bold text-gray-600">{chipStack}</p>
                     </div>
                     {/* Deck */}
-                    <h2 className="m-2 p-2 border border-2 font-bold text-center text-gray-600">Deck</h2>
+                    {/* <h2 className="m-2 p-2 border border-2 font-bold text-center text-gray-600">Deck</h2> */}
                     {/* Action Buttons */}
-                    <button className="m-3 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white font-bold py-1 px-2 aspect-square w-20 h-20" 
+                    <button className="m-3 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white text-xs lg:text-md font-bold py-1 px-2 aspect-square w-1/2 lg:w-1/2" 
                         onClick={() => {
                             dealHand(currentDeck); 
                         }}
                         disabled={!roundComplete}
                     >Deal</button>
-                    <button className="m-3 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white font-bold py-1 px-2 aspect-square w-20 h-20" 
+                    <button className="m-3 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white text-xs lg:text-md font-bold py-1 px-2 aspect-square w-1/2 lg:w-1/2" 
                     disabled={playerSticking}
                         onClick={() => 
                             dealCard(currentDeck, "Player", true)
                         }
                     >Hit</button>
-                    <button className="m-3 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white font-bold py-1 px-2 aspect-square w-20 h-20" 
+                    <button className="m-3 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white text-xs lg:text-md font-bold py-1 px-2 aspect-square w-1/2 lg:w-1/2" 
                         disabled={playerSticking}
                         onClick={() => {
                             setPlayerSticking(true); 
@@ -327,7 +328,7 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
 
                 </div>
                 {/* Player/Dealer cards */}
-                <div className={`col-span-3`}>
+                <div className={`col-span-3 row-span-2`}>
                     <CardHand 
                         hand={playerHand} 
                         player="Player" 
