@@ -20,7 +20,12 @@ export default {
                     'Clubs': "url('storage/images/Clubs.svg')",
                     'Diamonds': "url('storage/images/Diamonds.svg')",
                     'Spades': "url('storage/images/Spades.svg')",
-            })
+            }),
+            screens: {
+                'tall': { 'raw': '(min-height: 1024px)' },
+                'medium': { 'raw': '(min-height: 800px) (max-height: 1023px)' },
+                // => @media (min-height: 800px) { ... }
+              }
         },
     },
 

@@ -18,7 +18,7 @@ export default function TVSet({ auth, tvShow, deck, high_scores }) {
                     zoom ? 
                     <div className="flex h-full w-screen">
                         <div id="internal" className="p-12 bg-[#B6BAB3] w-full">
-                            <div id="screen" className={`h-full rounded-[12em] border border-2 ${turnedOn ? 'bg-cyan-100' : 'bg-black'}`}>
+                            <div id="screen" className={`h-full tall:rounded-[12em] medium:rounded-[3em] rounded-[2em] border border-2 ${turnedOn ? 'bg-cyan-100' : 'bg-black'}`}>
                                 <div id="tv-show" className="h-full font-bold text-4xl flex justify-center items-center">
                                     {turnedOn && !startGame ?
                                     <>
@@ -50,8 +50,8 @@ export default function TVSet({ auth, tvShow, deck, high_scores }) {
                         <div id="left-case-trim" className="absolute inset-y-0 left-6 w-0.5 bg-gray-400"></div>
                           
                         <div id="outer-case-inner" className="grid h-full border border-2 border-red-900 grid-rows-10 bg-orange-900">
-                            <div id="internal" className="row-span-7 p-12  bg-[#B6BAB3]">
-                                <div id="screen" className={`h-full rounded-[12em] md:rounded-[6em] border border-2 transition-all duration-1000 ${turnedOn ? 'bg-cyan-100' : 'bg-black'}`}>
+                            <div id="internal" className="row-span-7 tall:p-12 medium:p-8 p-6 bg-[#B6BAB3]">
+                                <div id="screen" className={`h-full tall:rounded-[12em] medium:rounded-[3em] rounded-[2em] border border-2 transition-all duration-1000 ${turnedOn ? 'bg-cyan-100' : 'bg-black'}`}>
                                     <div id="tv-show" className="h-full font-bold text-4xl flex justify-center items-center">
                                         {turnedOn && !startGame ?
                                         <>
