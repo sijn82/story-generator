@@ -42,6 +42,9 @@ Route::get("/character/{id}", [CharacterController::class, 'show'])->name('chara
 Route::get("/blackjack", [BlackJackController::class, 'start'])->name('blackjack.start');
 
 Route::get("tvset", [TVSetController::class, 'show'])->name('tvset.show');
+Route::get("farmer", function () {
+    return Inertia::render('FarmerReplaced');
+})->name("farmer.show");
 
 Route::post("/highscore/store", [HighScoreController::class, 'store'])->name('highscore.store');
 Route::get("/highscores/{type}", [HighScoreController::class, 'list'])->name('highscores.list');
