@@ -27,7 +27,7 @@ class GenerateScenario extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Generate three scenarios and choose one';
 
     /**
      * Execute the console command.

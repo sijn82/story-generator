@@ -10,6 +10,7 @@ use App\Http\Controllers\TVSetController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\HuggingFaceAIController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -45,8 +46,19 @@ Route::get("tvset", [TVSetController::class, 'show'])->name('tvset.show');
 Route::get("farmer", function () {
     return Inertia::render('FarmerReplaced');
 })->name("farmer.show");
+Route::get("story-generator", function () {
+    return Inertia::render('StoryGenerator');
+})->name("story-generator.show");
 
 Route::post("/highscore/store", [HighScoreController::class, 'store'])->name('highscore.store');
 Route::get("/highscores/{type}", [HighScoreController::class, 'list'])->name('highscores.list');
+
+Route::get("/huggingface", function () {
+    $huggingFaceController = new HuggingFaceAIController();
+    return $huggingFaceController->huggingFaceAIRequest("Act as a character creator. Come up with 3 roleplaying character profiles to play as in an interactive roleplaying story. 
+                            Use the provided JSON schema. The characters should be unique and interesting. 
+                            Include a brief description of their physical appearance and a brief summary of their personality traits. 
+                            Along with their age, profession and full name. For inspiration, think about the characters you might find in a fantasy, science fiction, or Lovecraftian horror story.");
+});
 
 require __DIR__.'/auth.php';

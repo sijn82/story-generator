@@ -6,8 +6,8 @@ export default function Portfolio() {
 
     return (
         <div className='max-w-screen-lg mx-auto'>
-            <div className="text-center font-bold text-xl my-12">Portfolio Projects</div>
-            <div className="px-12 mx-12 my-6">
+            <div className="text-center font-bold text-2xl py-12 text-zinc-500">Portfolio Projects</div>
+            <div className="px-3 md:px-12 mx-3 md:mx-12 pb-12 text-zinc-600">
                 Hey, thanks for taking a look! Apologies for the lack of "wow factor", as you can probably tell this site was quickly assembled so you had somewhere to go. I am currently prioritising adding a variety of portfolio projects before I work on a more polished theme.
                 The number of items in this list will slowly build over time as I add more projects but for now you can click the links to check out Black Jack or my solution to The Farmer Was Replaced maze challenge.  
             </div>
@@ -15,7 +15,7 @@ export default function Portfolio() {
                 As a side note, after building the Black Jack game I prioritised expanding my AWS experience; setting this site up in an ECS2 instance with an RDS MYSQL database and S3 bucket for storage.  
                 I'm also using Github Actions for automated deployment.  Now that the infrastructure is in place and you have something to look at, I'm looking forward to adding the "wow".
             </div> */}
-            <div>
+            <div className='mx-6'>
                 <PortfolioItem 
                     title="AWS"
                     article="While not technically a portfolio project, one of my goals for this site was to host it all in AWS to expand my knowledge.  This site is running in an ECS2 instance with an RDS MYSQL database and S3 bucket for assets and storage.  I'm also using Github Actions for automated deployment."
@@ -37,6 +37,14 @@ export default function Portfolio() {
                     link={route("farmer.show")}
                     number={2}
                 />
+                {/* <PortfolioItem 
+                    title="AI Story Generator"
+                    article="The original goal for this project was to play around with Laravel Prompts and Open AI.  From the command line you could (optionally) create an account (login details), and start making some story assets. If the user id was passed into the next steps, the assets would be saved to their account, otherwise they would go into the pool of generic assets. 
+                    To begin, 3 story scenarios are generated, which include a name and a brief description. The user then selects one of the scenarios to generate 3 characters using the scenario description for inspiration.  Each character comes with a name, age, profession, personality and appearance. If the user logged into their account they could then see any stories and characters they had created. 
+                    While it worked, the character generation was temperamental often requiring several attempts to return a valid response.  Frustratingly, rather than timing out or returning an error, it returned an empty object despite the json schema clearly defining what was expected.  I also found that despite giving the OpenAI model a fairly loose prompt to encourage variety, the responses were always variations of a very similar theme and character repetition was evident."
+                    link={route("story-generator.show")}
+                    number={3}
+                /> */}
             </div>
         </div>
     )
