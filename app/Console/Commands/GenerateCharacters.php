@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use App\Http\Controllers\OpenAIController;
+use App\Http\Controllers\HuggingFaceAIController;
 use App\Models\Profile;
 use App\Models\Character;
 use App\Models\Story;
@@ -29,7 +30,7 @@ class GenerateCharacters extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Generate three characters optionally passing in a story id for inspiration, choose which one is the player character';
 
     /**
      * Execute the console command.
@@ -69,11 +70,13 @@ class GenerateCharacters extends Command
         
 
         // create an instance of the OpenAIController (not my usual approach)
-        $openAIController = new OpenAIController();
+        // $openAIController = new OpenAIController();
+        $huggingFaceController = new HuggingFaceAIController();
 
         info($character_prompt);
 
-        $characters_response = $openAIController->openAIRequest("character", 3, $character_prompt);
+        //$characters_response = $openAIController->openAIRequest("character", 3, $character_prompt);
+        $characters_response = $huggingFaceController->huggingFaceAIRequest($character_prompt, "characters_mistral", 3);
         $character_names = [];
 
         if (!isset($characters_response->characters)) {

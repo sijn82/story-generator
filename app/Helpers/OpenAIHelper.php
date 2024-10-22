@@ -19,6 +19,10 @@ class OpenAIHelper
                 return $this->jsonSchemas->scenarios($number_of_items);
             case "character":
                 return $this->jsonSchemas->characters($number_of_items);
+            case "scenarios_mistral":
+                return $this->jsonSchemas->scenarios_mistral($number_of_items);
+            case "characters_mistral":
+                return $this->jsonSchemas->characters_mistral($number_of_items);
         }
     }
 

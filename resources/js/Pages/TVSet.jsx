@@ -13,7 +13,7 @@ export default function TVSet({ auth, tvShow, deck, high_scores }) {
 
     return (
         <div className="h-screen flex flex-col" >
-            <div className="flex h-full border border-2 m-5 p-5 bg-[url('https://sijn-portfolio.s3.eu-west-2.amazonaws.com/chevrons.svg')]">
+            
                 {
                     zoom ? 
                     <div className="flex h-full w-screen">
@@ -45,53 +45,54 @@ export default function TVSet({ auth, tvShow, deck, high_scores }) {
                     </div>
                     
                     :
-                    <div id="outer-case" className={`h-full relative aspect-square m-auto border border-2 border-red-900 rounded-lg p-12 bg-[url('https://sijn-portfolio.s3.eu-west-2.amazonaws.com/woodeffect.svg')]`}>
-                      
-                        <div id="left-case-trim" className="absolute inset-y-0 left-6 w-0.5 bg-gray-400"></div>
-                          
-                        <div id="outer-case-inner" className="grid h-full border border-2 border-red-900 grid-rows-10 bg-orange-900">
-                            <div id="internal" className="row-span-7 tall:p-12 medium:p-8 p-6 bg-[#B6BAB3]">
-                                <div id="screen" className={`h-full tall:rounded-[12em] medium:rounded-[3em] rounded-[2em] border border-2 transition-all duration-1000 ${turnedOn ? 'bg-cyan-100' : 'bg-black'}`}>
-                                    <div id="tv-show" className="h-full font-bold text-4xl flex justify-center items-center">
-                                        {turnedOn && !startGame ?
-                                        <>
-                                            <Typewriter
-                                                text="Black Jack" 
-                                                additionalText="Start Game" 
-                                                textDelay={300} 
-                                                additionalTextDelay={100}
-                                                // setCompleted=
-                                            />
-                                            {/* <Button onClick={() => setStartGame(startGame => !startGame )}>Start Game</Button> */}
-                                        </>
-                                        :
-                                        turnedOn && startGame ?
-                                        <>
-                                            <BlackJack deck={deck} highScores={high_scores}/>
-                                        </>
-                                        :
-                                        <></>
-                                        }
+                    <div className="flex h-full border border-2 m-5 p-5 bg-[url('https://sijn-portfolio.s3.eu-west-2.amazonaws.com/chevrons.svg')]">
+                        <div id="outer-case" className={`h-full relative aspect-square m-auto border border-2 border-red-900 rounded-lg p-12 bg-[url('https://sijn-portfolio.s3.eu-west-2.amazonaws.com/woodeffect.svg')]`}>
+                        
+                            <div id="left-case-trim" className="absolute inset-y-0 left-6 w-0.5 bg-gray-400"></div>
+                            
+                            <div id="outer-case-inner" className="grid h-full border border-2 border-red-900 grid-rows-10 bg-orange-900">
+                                <div id="internal" className="row-span-7 tall:p-12 medium:p-8 p-6 bg-[#B6BAB3]">
+                                    <div id="screen" className={`h-full tall:rounded-[12em] medium:rounded-[3em] rounded-[2em] border border-2 transition-all duration-1000 ${turnedOn ? 'bg-cyan-100' : 'bg-black'}`}>
+                                        <div id="tv-show" className="h-full font-bold text-4xl flex justify-center items-center">
+                                            {turnedOn && !startGame ?
+                                            <>
+                                                <Typewriter
+                                                    text="Black Jack" 
+                                                    additionalText="Start Game" 
+                                                    textDelay={300} 
+                                                    additionalTextDelay={100}
+                                                    // setCompleted=
+                                                />
+                                                {/* <Button onClick={() => setStartGame(startGame => !startGame )}>Start Game</Button> */}
+                                            </>
+                                            :
+                                            turnedOn && startGame ?
+                                            <>
+                                                <BlackJack deck={deck} highScores={high_scores}/>
+                                            </>
+                                            :
+                                            <></>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
+                                <div id="bottom-grill" className={`row-span-3 border-t border-t-2 border-red-900 bg-[url('https://sijn-portfolio.s3.eu-west-2.amazonaws.com/crosshatch.svg')]`}>
+                                    <TVDials 
+                                        turnedOn={turnedOn} 
+                                        setTurnedOn={setTurnedOn} 
+                                        startGame={startGame} 
+                                        setStartGame={setStartGame} 
+                                        zoom={zoom} 
+                                        setZoom={setZoom}
+                                    />
+                                </div>
                             </div>
-                            <div id="bottom-grill" className={`row-span-3 border-t border-t-2 border-red-900 bg-[url('https://sijn-portfolio.s3.eu-west-2.amazonaws.com/crosshatch.svg')]`}>
-                                <TVDials 
-                                    turnedOn={turnedOn} 
-                                    setTurnedOn={setTurnedOn} 
-                                    startGame={startGame} 
-                                    setStartGame={setStartGame} 
-                                    zoom={zoom} 
-                                    setZoom={setZoom}
-                                />
-                            </div>
+                            <div id="right-case-trim" className="absolute inset-y-0 right-6 w-0.5 bg-gray-400"></div>
                         </div>
-                        <div id="right-case-trim" className="absolute inset-y-0 right-6 w-0.5 bg-gray-400"></div>
                     </div>
-
                 }
                 
             </div>
-        </div>
+        
     );
 };

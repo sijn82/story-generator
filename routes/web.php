@@ -29,10 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get("/scenarios", function () {
-    $openAIController = new OpenAIController();
-    return $openAIController->openAIRequest("scenario", 3, "Come up with some story scenarios for a game. Use the provided JSON schema. The scenarios should be unique and interesting. Where the title is the title of the scenario and the description is a brief description of the scenario.");
-});
+// Route::get("/scenarios", function () {
+//     $openAIController = new OpenAIController();
+//     return $openAIController->openAIRequest("scenario", 3, "Come up with some story scenarios for a game. Use the provided JSON schema. The scenarios should be unique and interesting. Where the title is the title of the scenario and the description is a brief description of the scenario.");
+// });
 
 Route::get("portfolio", function() {
     return Inertia::render('Portfolio');
@@ -55,10 +55,7 @@ Route::get("/highscores/{type}", [HighScoreController::class, 'list'])->name('hi
 
 Route::get("/huggingface", function () {
     $huggingFaceController = new HuggingFaceAIController();
-    return $huggingFaceController->huggingFaceAIRequest("Act as a character creator. Come up with 3 roleplaying character profiles to play as in an interactive roleplaying story. 
-                            Use the provided JSON schema. The characters should be unique and interesting. 
-                            Include a brief description of their physical appearance and a brief summary of their personality traits. 
-                            Along with their age, profession and full name. For inspiration, think about the characters you might find in a fantasy, science fiction, or Lovecraftian horror story.");
+    return $huggingFaceController->huggingFaceAIRequest("Act as an AI supporting fiction writers in crafting extraordinary stories. Generate 3 story scenarios for an interactive roleplaying game using the provided JSON schema to shape your response. The scenarios should be unique and interesting, including a title and a brief description. For inspiration, think about the tales you might find in a fantasy, science fiction, or Lovecraftian horror story.", "scenarios_mistral", 3);
 });
 
 require __DIR__.'/auth.php';

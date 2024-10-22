@@ -59,8 +59,8 @@ export default function FarmerReplaced() {
                     <div className='text-zinc-600 mb-3'>
                         The main issue I have with my current solution is that the drone attempts to move in each cardinal direction at every step before returning to its current location, causing it to jitter around the maze. The in built move function (moves the drone and) returns true if it is able to move in the direction given or false if prevented by hedgerow.
                     </div>
-                    <div className='text-zinc-600 mb-3'>
-                        Ideally I would like it to make this check without actually moving but I couldn't find a way.  This may be a limitation of my approach and I could reduce the checks by allowing the drone to continue forward as soon as it passes a movement check but for my first attempt at this challenge I was primarily focused on creating a solution that adhered to my intial logic.  In hindsight I could also have taken the approach of making the drone head left of its current orientation whenever blocked which would also succeed in a maze that doesn't contain loops.
+                    <div className='text-zinc-600 mb-12'>
+                        Ideally I would like it to make this check without actually moving but I couldn't find a way.  This may be a limitation of my approach and I could reduce the checks by allowing the drone to continue forward as soon as it passes a movement check but for my first attempt at this challenge I was keen to create a solution that adhered to my initial logic before optimising.  In hindsight I could also have taken the approach of making the drone head left of its current orientation whenever blocked which would also succeed in a maze that doesn't contain loops.
                     </div>
                 </div>
             </div>

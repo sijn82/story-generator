@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use App\Http\Controllers\OpenAIController;
+use App\Http\Controllers\HuggingFaceAIController;
+
 use App\Models\Profile;
 use App\Models\Scenario;
 
@@ -35,15 +37,17 @@ class GenerateScenario extends Command
     public function handle()
     {
 
-        $scenario_prompt =  "Come up with 3 story scenarios for an interactive roleplaying game. 
-                            Use the provided JSON schema. The scenarios should be unique and interesting. For inspiration, think about the tales you might find in a fantasy, science fiction, or Lovecraftian horror story.";
+        $scenario_prompt =  "Act as an AI supporting fiction writers in crafting extraordinary stories. Generate 3 story scenarios for an interactive roleplaying game using the provided JSON schema to shape your response. 
+                            The scenarios should be unique and interesting, including a title and a brief description. For inspiration, think about the tales you might find in a fantasy, science fiction, or Lovecraftian horror story.";
 
         
         // // create an instance of the OpenAIController (not my usual approach)
-        $openAIController = new OpenAIController();
+        // $openAIController = new OpenAIController();
+        $huggingFaceController = new HuggingFaceAIController();
 
         // generate the scenarios
-        $scenarios_response = $openAIController->openAIRequest("scenario", 3, $scenario_prompt);
+        // $scenarios_response = $openAIController->openAIRequest("scenario", 3, $scenario_prompt);
+        $scenarios_response = $huggingFaceController->huggingFaceAIRequest($scenario_prompt, "scenarios_mistral", 3);
         $scenario_titles = [];
         
 
