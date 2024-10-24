@@ -17,8 +17,8 @@ export default function TVSet({ auth, tvShow, deck, high_scores }) {
                 {
                     zoom ? 
                     <div className="flex h-full w-screen">
-                        <div id="internal" className="p-12 bg-[#B6BAB3] w-full">
-                            <div id="screen" className={`h-full tall:rounded-[12em] medium:rounded-[3em] rounded-[2em] border border-2 ${turnedOn ? 'bg-cyan-100' : 'bg-black'}`}>
+                        <div id="internal" className="lg:p-12 lg:bg-[#B6BAB3] w-full">
+                            <div id="screen" className={`h-full tall:rounded-[12em] medium:rounded-[3em] lg:rounded-[8em] border border-2 ${turnedOn ? 'bg-cyan-100' : 'bg-black'}`}>
                                 <div id="tv-show" className="h-full font-bold text-4xl flex justify-center items-center">
                                     {turnedOn && !startGame ?
                                     <>

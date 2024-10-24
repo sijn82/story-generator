@@ -251,10 +251,12 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
 
     return (
         <div className="h-full flex-col flex text-sm justify-center items-center">
-
+            <div className="landscape:hidden lg:hidden mx-6 text-center flex text-gray-700">
+                This experience is designed to be viewed in landscape.  On mobile please rotate your device for the best experience and use the zoom dial if you have not already.
+            </div>
             {zoom && 
-                <div className="m-1 flex justify-center text-gray-700">
-                    <button className=" border-2 p-1" onClick={() => setZoom(zoom => !zoom)}>Exit Full Screen</button>
+                <div className="relative m-3 flex justify-center text-gray-700">
+                    <button className="absolute w-48 border-2 p-1" onClick={() => setZoom(zoom => !zoom)}>Exit Full Screen</button>
                 </div>}
             {gameOver ? <GameOver gameStatus={gameStatus} chipStack={chipStack} highScores={highScores} />
                 :
@@ -306,19 +308,19 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
                     {/* Deck */}
                     {/* <h2 className="m-2 p-2 border border-2 font-bold text-center text-gray-600">Deck</h2> */}
                     {/* Action Buttons */}
-                    <button className="m-3 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white text-xs lg:text-md font-bold py-1 px-2 aspect-square w-1/2 lg:w-1/2" 
+                    <button className="m-2 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white text-xs lg:text-md font-bold py-1 px-2 aspect-square w-1/2 lg:w-1/2" 
                         onClick={() => {
                             dealHand(currentDeck); 
                         }}
                         disabled={!roundComplete}
                     >Deal</button>
-                    <button className="m-3 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white text-xs lg:text-md font-bold py-1 px-2 aspect-square w-1/2 lg:w-1/2" 
+                    <button className="m-2 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white text-xs lg:text-md font-bold py-1 px-2 aspect-square w-1/2 lg:w-1/2" 
                     disabled={playerSticking}
                         onClick={() => 
                             dealCard(currentDeck, "Player", true)
                         }
                     >Hit</button>
-                    <button className="m-3 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white text-xs lg:text-md font-bold py-1 px-2 aspect-square w-1/2 lg:w-1/2" 
+                    <button className="m-2 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white text-xs lg:text-md font-bold py-1 px-2 aspect-square w-1/2 lg:w-1/2" 
                         disabled={playerSticking}
                         onClick={() => {
                             setPlayerSticking(true); 
