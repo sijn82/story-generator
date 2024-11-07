@@ -11,6 +11,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\HuggingFaceAIController;
+use App\Http\Controllers\WhiteRabbitController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -49,6 +50,9 @@ Route::get("farmer", function () {
 Route::get("story-generator", function () {
     return Inertia::render('StoryGenerator');
 })->name("story-generator.show");
+Route::get("follow-the-white-rabbit", function () {
+    return Inertia::render('FollowTheWhiteRabbit');
+})->name("follow-white-rabbit.show");
 
 Route::post("/highscore/store", [HighScoreController::class, 'store'])->name('highscore.store');
 Route::get("/highscores/{type}", [HighScoreController::class, 'list'])->name('highscores.list');
@@ -58,4 +62,6 @@ Route::get("/huggingface", function () {
     return $huggingFaceController->huggingFaceAIRequest("Act as an AI supporting fiction writers in crafting extraordinary stories. Generate 3 story scenarios for an interactive roleplaying game using the provided JSON schema to shape your response. The scenarios should be unique and interesting, including a title and a brief description. For inspiration, think about the tales you might find in a fantasy, science fiction, or Lovecraftian horror story.", "scenarios_mistral", 3);
 });
 
+Route::get("whiterabbit/solve-anagram", [WhiteRabbitController::class, 'anagram_solver'])->name('whiterabbit.solve');
+Route::get("whiterabbit/test", [WhiteRabbitController::class, 'testPhrases']);
 require __DIR__.'/auth.php';
