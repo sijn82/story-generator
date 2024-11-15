@@ -9,7 +9,7 @@ export default function Portfolio() {
             <div className="text-center font-bold text-2xl py-12 text-zinc-500">Portfolio Projects</div>
             <div className="px-3 md:px-12 mx-3 md:mx-12 pb-12 text-zinc-600">
                 Hey, thanks for taking a look and apologies for the current lack of "wow factor". As you can probably tell this site was quickly assembled so you had somewhere to go. I have prioritised the addition of a variety of portfolio projects before I work on a more polished theme.
-                The number of items in this list will slowly build over time as I add more projects but for now you can click the links to check out Black Jack, The Farmer Was Replaced maze challenge and my creative writing experiments with AI.  
+                The number of items in this list will slowly build over time as I add more projects but for now you can click the links to check out Black Jack, The Farmer Was Replaced maze challenge and my creative writing experiments with AI. I've also just completed the Trust Pilot 'Follow The White Rabbit' challenge and added a write up with some code examples.
             </div>
             {/* <div className="px-12 mx-12 my-6">    
                 As a side note, after building the Black Jack game I prioritised expanding my AWS experience; setting this site up in an ECS2 instance with an RDS MYSQL database and S3 bucket for storage.  
