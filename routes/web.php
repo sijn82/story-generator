@@ -62,6 +62,6 @@ Route::get("/huggingface", function () {
     return $huggingFaceController->huggingFaceAIRequest("Act as an AI supporting fiction writers in crafting extraordinary stories. Generate 3 story scenarios for an interactive roleplaying game using the provided JSON schema to shape your response. The scenarios should be unique and interesting, including a title and a brief description. For inspiration, think about the tales you might find in a fantasy, science fiction, or Lovecraftian horror story.", "scenarios_mistral", 3);
 });
 
-Route::get("whiterabbit/solve-anagram", [WhiteRabbitController::class, 'anagram_solver'])->name('whiterabbit.solve');
-Route::get("whiterabbit/test", [WhiteRabbitController::class, 'testPhrases']);
+Route::get("whiterabbit/solve-anagram", [WhiteRabbitController::class, 'generate_secret_phrase'])->name('whiterabbit.solve');
+// Route::get("whiterabbit/test", [WhiteRabbitController::class, 'unusual_words']);
 require __DIR__.'/auth.php';

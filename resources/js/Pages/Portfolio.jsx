@@ -25,7 +25,7 @@ export default function Portfolio() {
                 <PortfolioItem
                     title="Black Jack"
                     article="I was trying to think of some fun coding ideas and the first that came to mind was recreating Black Jack, potentially as one of several card games.  The second was playing around with svg's so I combined the two together into this. There is still some work to do with the design, specifically on smaller screens.  
-                    The design in general is also more a culmination of having some fun rather than keeping the design clean/neutral and more famaliar to my professional work.  This design started with my attempt to recreate an Adobe stock photo of a 1950's tv set and went from there. I will say though, that I put a lot more effort into making the game mechanics as bug free as possible.
+                    The design in general is also more a culmination of having some fun rather than keeping the design clean/neutral and more familiar to my professional work.  This design started with my attempt to recreate an Adobe stock photo of a 1950's tv set and went from there. I will say though, that I put a lot more effort into making the game mechanics as bug free as possible.
                     Todo: I always intended to allow the user to zoom into and focus on the game but at the moment on smaller screens this is a necessity for it to display properly, and despite using Tailwind I wasn't designing it with mobile in mind. State persistence is another issue to be resolved as zooming in and out will currently reset the game."
                     link={route("tvset.show")}
                     number={1}

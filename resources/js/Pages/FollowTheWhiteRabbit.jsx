@@ -1,6 +1,6 @@
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import {convert_file_to_lazy_collection, strip_out_words_not_in_anagram, reduce_list_for_third_word_to_characters_remaining_in_anagram, anagram_solver} from '@/Helpers/Text/FollowTheWhiteRabbit';
+import {convert_file_to_lazy_collection, strip_out_words_not_in_anagram, reduce_list_for_final_word_to_characters_remaining_in_anagram, generate_secret_phrase} from '@/Helpers/Text/FollowTheWhiteRabbit';
 
 export default function FollowTheWhiteRabbit()
 {
@@ -18,7 +18,7 @@ export default function FollowTheWhiteRabbit()
                         Knowing that there are three levels of difficulty I made a couple of assumptions.  
                         Firstly, as the anagram is made of three words, the easiest phrase at least, would likely be the same.  
                         Secondly, that as the anagram didn't include an apostrophy the easiest phrase probably wouldn't either, and would be made up of words using characters without diacritic marks like accents and umlauts.  
-                        Which leads me to a third and currently still unproven assumption, that the hardest phase may be more than 3 words and will likely contain at least one word which contains a diacritic mark or apostrophy.
+                        Which led me to a third assumption, that the hardest phase may be more than 3 words and will likely contain at least one word which contains a diacritic mark or apostrophy.
                     </div>
                     <div className='font-bold text-lg text-zinc-500 my-6'> Solution </div>
                     <div className='text-zinc-600 mb-3'>
@@ -46,31 +46,42 @@ export default function FollowTheWhiteRabbit()
                         </div>
                         <div className='my-6 border-lime-300 border-2 text-xs m-auto'>
                             <SyntaxHighlighter language="php" style={docco}>
-                                {reduce_list_for_third_word_to_characters_remaining_in_anagram}
+                                {reduce_list_for_final_word_to_characters_remaining_in_anagram}
                             </SyntaxHighlighter>
                         </div>
                         <div className='text-zinc-600 mb-3'>
                             Once I had a three word phrase it was time to turn it into an MD5 hash and compare it. 
                             I wanted to start from the easiest hash and work towards the hardest solution so rather than try the phrase with all 3 possible answers I only check one at a time.  
-                            I wont give away the correct phrases here as it would spoil the fun of doing it yourself but I can say that my solution calculated the easiest phrase in 87 seconds and the medium phrase in 220 seconds. I was surprised but quite pleased to discover that I didn't need to make any tweaks to the code in order to complete the medium challenge but it failed to find a match on the hardest difficulty.
+                            I wont give away the correct phrases here as it would spoil the fun of doing it yourself but I can say that my solution calculated the easiest phrase in 48 seconds and the medium phrase in 115 seconds. I was surprised but quite pleased to discover that I didn't need to make any tweaks to the code in order to complete the medium challenge but it failed to find a match on the hardest difficulty.
                         </div>
                         <div className='text-zinc-600 mb-3'>
                             The code below isn't the whole class as I wanted to keep the code examples down to enhance the narrative.  
-                            Also now that I am onto the hardest challenge I will need to make changes to some of the functions and probably stop relying on the hardcoded three word approach but this code accurately shows my chain of thought, even if it has more repetition than I would like.
+                            It also shows the tweaks I made to the code to optionally include a fourth word as I tried to complete the hardest challenge.  Prior to settling on this approach I experimented with a recursive function but the time taken to allow a fourth word increased the duration dramatically and when I allowed as many as required to use up all the anagram characters or clear the word list was ununsable.
                         </div>
                         <div className='my-6 border-lime-300 border-2 text-xs m-auto'>
                             <SyntaxHighlighter language="php" style={docco}>
-                                {anagram_solver}
+                                {generate_secret_phrase}
                             </SyntaxHighlighter>
                         </div>
-                        <div className='font-bold text-lg text-zinc-500 my-6'> Next Steps </div>
+                        <div className='font-bold text-lg text-zinc-500 my-6'> The Hardest Difficulty </div>
                         <div className='text-zinc-600 mb-3'>
-                            Initially I am curious to know whether the three word approach is still valid for the hardest solution and I merely need to allow for words which include apostrophies and diacritic marks.  To try this theory out I will create a function to pinpoint these words and ensure they are not stripped out of the wordlist and when comparing to the anagram. Then if I still fail to find the solution I will change my approach to continue looping while there are characters remaining in the anagram and possible matches in the wordlist.  
-                            Though the amount of new possible phrases this could create means it will run for a lot longer and it already takes a while.
+                            After failing to find the hardest hash with the initial approach I reintroduced the words which were apostrophised and/or included diacritic marks. This added another 1000+ words into the loop and a few more considerations when comparing the word to the anagram.
+                            This increased the time taken to find the easier and medium challenges to 87 and 220 seconds respectively and led me down a few failed experiments to improve performance.  
+                            I believe saving the wordlist to a database would have had a positive impact but for some reason decided this was outside the scope of the challenge.
+                        </div>
+                        <div className='text-zinc-600 mb-3'>
+                            Finally I allowed a fourth word into the phrase and ran the code again.  
+                            Initially I increased the max duration time to 2 hrs but this wasn't sufficient, so I wrote a new function to start from where it had left off and ran it again. 
+                            At this point I had decided to persevere until the code completed and I either had the solution or confirmation a rethink was required.  
+                            Thankfully, after more than 8 hrs it did return the answer and after a few tweaks to the code I had the time taken down to 7536 seconds (or just over 2 hours and 5 mins).
+                            While this is noticably quicker all it really comes down to is optimising the list I was looping over at each stage.
+                        </div>
+                        <div className='text-zinc-600 mb-3'>
+                            I really enjoyed this challenge and would love to see how others approached it in PHP/Laravel and whether they found a much more performant solution but this is as far as I intend to go.  It's time to find a new challenge :)
                         </div>
                         <div className='text-zinc-600 mb-12'>
-                            Finally I will tweak the output to find all three phrases and record the time taken for each one.  It will be interesting to see if my final solution is quicker or slower to find the first two phrases, though I assume it will be slower as there will be more words to process and I'm curious to know how much slower.
-                        </div>
+                        <img className="my-6 border-lime-300 border-2" src="http://d1fftu7568zsov.cloudfront.net/follow_the_white_rabbit_completed.png" alt="" />
+                    </div>
                     </div>
                 </div>
             </div>
