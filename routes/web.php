@@ -41,7 +41,7 @@ Route::get("portfolio", function() {
 
 Route::get("/character/{id}", [CharacterController::class, 'show'])->name('character.show');
 
-Route::get("/blackjack", [BlackJackController::class, 'start'])->name('blackjack.start');
+Route::get("/blackjack/old", [BlackJackController::class, 'start'])->name('blackjackold.start');
 
 Route::get("tvset", [TVSetController::class, 'show'])->name('tvset.show');
 Route::get("farmer", function () {
@@ -53,6 +53,9 @@ Route::get("story-generator", function () {
 Route::get("follow-the-white-rabbit", function () {
     return Inertia::render('FollowTheWhiteRabbit');
 })->name("follow-white-rabbit.show");
+Route::get("blackjack", function () {
+    return Inertia::render("BlackJack");
+})->name("blackjack.show");
 
 Route::post("/highscore/store", [HighScoreController::class, 'store'])->name('highscore.store');
 Route::get("/highscores/{type}", [HighScoreController::class, 'list'])->name('highscores.list');

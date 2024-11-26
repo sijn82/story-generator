@@ -20,7 +20,7 @@ class BlackJackController extends Controller
 
         $deck = $this->deck->playingCards;
 
-        return Inertia::render('BlackJack', [
+        return Inertia::render('BlackJackOld', [
             'deck' => $deck,
             'high_scores' => $this->high_scores,
             // 'playerHand' => $playerHand,

@@ -1,352 +1,161 @@
+import Title from "@/Components/Title";
+import SubTitle from "@/Components/SubTitle";
+import Paragraph from "@/Components/Paragraph";
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { wood_effect_svg, calculate_current_total } from "@/Helpers/Text/BlackJack";
 import CardHand from "@/Components/CardHand";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { useEffect, useState } from "react";
+import Card from "@/Components/Card";
+import { Link } from "@inertiajs/react";
 
-
-export default function BlackJack({deck}) {
-
-    const [currentDeck, setCurrentDeck] = useState(deck);
-    const freshDeck = deck; // resets the deck to the original deck
-    const [playerHand, setPlayerHand] = useState([]);
-    const [dealerHand, setDealerHand] = useState([]);
-    const [bet, setBet] = useState(100);
-    const [chipStack, setChipStack] = useState(5000);
-    const [playerSticking, setPlayerSticking] = useState(false);
-    const [roundComplete, setRoundComplete] = useState(false);
-    const [gameStatus, setGameStatus] = useState('Ready');
-    const [gameOver, setGameOver] = useState(false);
-
-    // notes:
-
-    // 1. The player can only bet before the round starts (this feels normal but is it a rule?)
-    // 2. Only one player is supported at the moment
-    // 3. in_play determines visibility of in play cards but currently all in play cards are visible
-    //    so do I need this anymore?
-
-    const shuffleDeck = (deck) => {
-
-        for (let i = deck.length - 1; i > 0; i--) { 
-            const j = Math.floor(Math.random() * (i + 1)); 
-            [deck[i], deck[j]] = [deck[j], deck[i]]; 
-        }
-
-        setCurrentDeck([...deck]);
-
-    };
-
-    const resetDeck = () => {
-        setCurrentDeck([...freshDeck]);
-    };
-
-    const dealCard = (deck, player, showImmediately = false) => {
-
-        const card = deck.pop();
-        if (showImmediately) {
-            card.in_play = true;
-        }
-        setCurrentDeck([...deck]);
-
-        if (player === 'Dealer') {
-            setDealerHand(currentHand => [...currentHand, card]);
-            
-        } else {
-            setPlayerHand(currentHand => [...currentHand, card]);
-        }
-    };
-
-    const currentTotal = (hand) => {
-
-            // calculate the current total of the hand
-            let currentTotal = hand?.reduce((acc, card) => {
-
-                if (card.in_play) {
-                    if (card.name === 'King' || card.name === 'Queen' || card.name === 'Jack') {
-                        acc = acc + 10;
-                    } else if (card.name === 'Ace') {
-                        // rather than calculate whether to add 11 or 1, we'll just add 11
-                        // and then evaluate the total later
-                        acc = acc + 11;
-                    } else {
-                        acc = acc + card.value;
-                    }
-                } else {
-                     // nothing to do
-                }
-
-                return acc;
-                
-            }, 0);
-
-            // if the total is greater than 21, we need to re-evaluate the aces
-            if (currentTotal > 21 && hand?.filter(card => card.name === 'Ace').length > 0) {
-                
-                let acesInHand = hand?.filter(card => card.name === 'Ace')
-                // reduce the value of the first ace to 1 and recalculate the total
-                // if the total is still greater than 21, reduce the value of the second ace
-                // and recalculate the total etc.
-
-                acesInHand.forEach(() => {
-                    if (currentTotal > 21 ) {
-                        currentTotal = currentTotal - 10;
-                    } 
-                });
-            }
-
-            return currentTotal;
-
-    };
-
-    const dealHand = (deck) => {
-
-        // reset the dealer and player hands
-        setDealerHand([]);
-        setPlayerHand([]);
-        // reset the game and player status
-        setRoundComplete(false);
-        setPlayerSticking(false);
-        setGameStatus('Playing...');
-        // take the bet from the chip stack
-        setChipStack(chipStack - bet);
-
-        // deal the intitial 2 cards to the player and 1 to the dealer
-        dealCard(deck, "Player", true);
-        dealCard(deck, "Dealer", true);
-        dealCard(deck, "Player", true);
-
-    };
-
-    const showCard = (card, setHand) => {
-
-        setHand(currentHand => currentHand.map(
-            (cardInHand) => cardInHand.id === card.id ?
-                {...cardInHand, in_play: true} : cardInHand)
-        );
-
-    }
-
-    const playDealerHandAndDetermineWhoWins = () => {
-
-        // dealer draws cards until they have 17 or more
-        if (currentTotal(dealerHand) < 17) {
-            dealCard(currentDeck, "Dealer", true);
-
-        } else {
-
-            // prevent issuing more wins or losses by spamming the stick button
-            if (roundComplete) {
-                return;
-            }
-
-            // calculate the winner
-            const playerTotal = currentTotal(playerHand);
-            const dealerTotal = currentTotal(dealerHand);
-            let playerBlackjack = false;
-            let dealerBlackjack = false;
-
-            // calculate if the hand is a blackjack i.e 21 in 2 cards
-            if (playerTotal === 21 && playerHand.length === 2) {
-                // setPlayerBlackjack(true);
-                playerBlackjack = true;
-            }
-            if (dealerTotal === 21 && dealerHand.length === 2) {
-                // setDealerBlackjack(true);
-                dealerBlackjack = true;
-            }
-
-            if (playerTotal > 21) {
-                // player busts
-                setGameStatus('Player Busts');
-            } else if (dealerTotal > 21) {
-                // dealer busts
-                setChipStack(chipStack + (bet * 2));
-                setGameStatus('Dealer Busts');
-            } else if (playerTotal > dealerTotal) {
-                // player wins
-                if (playerBlackjack) {
-                    setChipStack(chipStack + (bet * 3));
-                    setGameStatus('Player wins with Black Jack');
-                } else {
-                    setChipStack(chipStack + (bet * 2));
-                    setGameStatus('Player Wins');
-                }
-
-            } else if (playerTotal < dealerTotal) {
-                // dealer wins
-                if (dealerBlackjack) {
-                    setGameStatus('Dealer wins with Black Jack');
-                } else {
-                    setGameStatus('Dealer Wins');
-                }
-
-            } else {
-                // draw
-                if (playerBlackjack && dealerBlackjack) {
-                    setChipStack(chipStack + bet);
-                    setGameStatus('Draw with Black Jack');
-                } else if (playerBlackjack) {
-                    setChipStack(chipStack + (bet * 1.5));
-                    setGameStatus('Player wins with Black Jack');
-                } else if (dealerBlackjack) {
-                    setGameStatus('Dealer wins with Black Jack');
-                } else {
-                    setChipStack(chipStack + bet);
-                    setGameStatus('Draw');
-                }
-                
-            }
-
-            setRoundComplete(true);
-            resetDeck();
-
-        }
-                
-    };
-
-    const selectBetValue = (event) => {
-        setBet((event.target.value > chipStack) ? chipStack : event.target.value);
-    };
-
-    useEffect(() => {
-        setCurrentDeck([...deck]);
-        shuffleDeck(currentDeck);
-    }, []);
-
-    useEffect(() => {
-        shuffleDeck(currentDeck);
-    }, [roundComplete]);
-
-    useEffect(() => {
-        if (chipStack <= 0 && roundComplete) {
-            setGameOver(true);
-        }
-    }, [chipStack, roundComplete]);
-
-    useEffect(() => {
-        if (playerSticking && !roundComplete) {
-            playDealerHandAndDetermineWhoWins();
-        }
-    }, [dealerHand, currentDeck]);
-
-    useEffect(() => {
-        if (currentTotal(playerHand) > 21) {
-            setPlayerSticking(true);
-            setGameStatus('Player Busts');
-            setRoundComplete(true);
-            resetDeck();
-        }
-    }, [playerHand]);
-
+export default function BlackJack()
+{
     return (
-        <div className="h-screen flex-col flex">
-            {/* <div className="h-full"> */}
-                <div className="">
-                    <h1 className="font-bold text-center text-gray-600 text-4xl py-4">BlackJack</h1>
-                </div>
-                {gameOver ? 
-                <div className="border border-2 flex h-full items-center justify-center">
+        <div className='max-w-screen-lg mx-auto'>
+            <Title title="Black Jack" />
+            <div className='px-3 md:px-12 mx-3 md:mx-12 mb-12'>
+                <div>
+                    <SubTitle title="Task" />
+                    <Paragraph 
+                        text="I was trying to think of some fun coding ideas and the first that came to mind was recreating Black Jack, potentially as one of several card games.  
+                        The second was playing around with svg's so I combined the two together into this."
+                    />
+                    <SubTitle title="SVG's" small={true} indent="ml-6" />
+                    <Paragraph 
+                        text="Some of my goals have been waiting patiently in the background for far too long and svg's are certainly one of them.  
+                        For whatever reason utilising them hasn't come up in my day to day work life other than using a customer/designer's prebuilt logo.
+                        So I decided to shoehorn them into this project by playing the game on a 1950's tv set. 
+                        I also realised I would need some kind of card suit design to build the deck and as I'd been having fun with them, threw in a snazzy background."
+                    />
+                    <Paragraph 
+                        text="I would also like to mention that all of my svg's were inspired by examples I found in articles online. Such as the wood effect being based upon this (https://css-tricks.com/creating-patterns-with-svg-filters/#aa-pine-wood). I would reference more here but so far I have been unable to find them all again.  I do plan on another svg project involving animations and I hope to update this at a later date, so as not to take credit for other people's work."
+                    />
                     <div className="">
-                        <div className="mx-4 flex justify-start border border-2 p-3 items-center bg-white">
-                            <h2 className="mx-4 flex font-bold text-gray-600">Game Status: <span className="flex mx-2 text-3xl font-bold text-gray-600 items-center">{gameStatus}</span></h2>
-                            {/* <h2 className="mx-4 flex">Round Complete: <span className="flex mx-2 text-4xl font-bold text-gray-600">{roundComplete ? "true" : "false"}</span></h2> */}
+                        <SubTitle title="TV Set" small={true} indent="ml-10"/>
+                        <Paragraph 
+                            text="As the first of many disclaimers here, I wasn't looking to make a direct recreation but merely a version inspired by.
+                            That said, an earlier version of this svg had a much more mahogany feel but was lost and never replicated after an over zealous computer wipe."
+                        />
+                        <div className="grid grid-cols-2 gap-12 my-6 justify-items-center max-h-64">
+                            <div>
+                                <img src="http://d1fftu7568zsov.cloudfront.net/1950-tv-set.jpg" alt="" />
+                            </div>
+                            <div>
+                                <img className="w-auto h-4/6 p-3"  src="http://d1fftu7568zsov.cloudfront.net/svg-1950-tv.png" alt="" />
+                            </div>
+
                         </div>
-                        <h2 className="mx-4 flex border border-2 p-3 font-bold text-gray-600">Chip Stack: <span className="flex mx-2 text-4xl font-bold text-gray-600">{chipStack}</span></h2>
-                        <h1 className="font-bold text-center text-gray-600 text-4xl py-4">Game Over</h1>
+                        <Paragraph 
+                            text="The code below is for the wood effect svg and I found the trick to increasing saturation was to use feBlend along with the feColourMatrix.  
+                            I spent far too long trying to recreate the mahogany effect and even pulled Copilot into help as I had a subscription at the time but I remained unsatisfied with the results and Copilot was practically useless which surprised me as I'd hoped it was a perfect use case."
+                        />
+                        <div className='my-6 border-lime-300 border-2 text-xs'>
+                            <SyntaxHighlighter language="xml" style={docco}>
+                                {wood_effect_svg}
+                            </SyntaxHighlighter>
+                        </div>
+                        <SubTitle title="Cards" small={true} indent="ml-10"/>
+                        <Paragraph 
+                            text="Another key consideration were the cards themselves.  
+                            I considered spending a lot longer on the design but ultimately decided upon something simple.  
+                            Also, while the suit wasn't directly necessary to play Black Jack I still felt as though it was an important component."
+                        />
+                        <Paragraph 
+                            text="In a future update I might create special face cards for Jack, Queen, King and Ace as well as colouring the cards depending on suit.
+                            I will also most likely switch to a white background for the card once I add colour; as the current blue was a temporary design choice (originally for the back of the card) which was left until I give the general design a second pass."
+                        />
+                        <div className="grid grid-cols-4 justify-items-center my-8">
+                            <Card 
+                                card={{
+                                    card_deck_id: 1, 
+                                    created_at: "2024-07-24T09:43:27.000000Z", 
+                                    id: 1, 
+                                    in_play: true, 
+                                    name: "A",
+                                    suit: "Hearts",
+                                    updated_at: "2024-07-24T09:43:27.000000Z",
+                                    value: 11
+                                }} showCard={true} setHand={() => {}} zoom={false}
+                            />
+                            <Card 
+                                card={{
+                                    card_deck_id: 1, 
+                                    created_at: "2024-07-24T09:43:27.000000Z", 
+                                    id: 2, 
+                                    in_play: true, 
+                                    name: "A",
+                                    suit: "Spades",
+                                    updated_at: "2024-07-24T09:43:27.000000Z",
+                                    value: 11
+                                }} showCard={true} setHand={() => {}} zoom={false}
+                            />
+                            <Card 
+                                card={{
+                                    card_deck_id: 1, 
+                                    created_at: "2024-07-24T09:43:27.000000Z", 
+                                    id: 3, 
+                                    in_play: true, 
+                                    name: "A",
+                                    suit: "Diamonds",
+                                    updated_at: "2024-07-24T09:43:27.000000Z",
+                                    value: 11
+                                }} showCard={true} setHand={() => {}} zoom={false}
+                            />
+                            <Card 
+                                card={{
+                                    card_deck_id: 1, 
+                                    created_at: "2024-07-24T09:43:27.000000Z", 
+                                    id: 4, 
+                                    in_play: true, 
+                                    name: "A",
+                                    suit: "Clubs",
+                                    updated_at: "2024-07-24T09:43:27.000000Z",
+                                    value: 11
+                                }} showCard={true} setHand={() => {}} zoom={false}
+                            />
+                        </div>
+                        <SubTitle title="Black Jack" indent="ml-6"/>
+                        <Paragraph 
+                            text="When deciding upon which card game I wanted to make, Black Jack stood out as a simple one player game (which could be expanded to include other players once I introduce more comprehensive state management) and actions that could be clearly defined for the dealer.  
+                            They would always pull another card until they reached a 17 or went bust."
+                        />
+                        <Paragraph 
+                            text="The most complicated part of this logic was re-evaluating Aces, so that the card would be worth 11 unless that led to the player going bust.  
+                            At which point it would set an ace in the player's hand to 1 and recalculate."
+                        />
+                        <div className='my-6 border-lime-300 border-2 text-xs'>
+                            <SyntaxHighlighter language="javascript" style={docco}>
+                                {calculate_current_total}
+                            </SyntaxHighlighter>
+                        </div>
+                        <Paragraph 
+                            text="While the gameplay came together pretty easily, I quickly felt hamstring by the design.  
+                            This was due to the early design decision to play the game on a tv set which narrowed the available space considerably."
+                        />
+                        <Paragraph 
+                            text="However as I had been building the game while using a large monitor, and as I had never really intended on making it mobile friendly, (despite using a mobile-first/utility-first CSS framework in TailwindCSS) - the extent of the problem was glossed over for too long."
+                        />
+                        <Paragraph 
+                            text="In the back of my mind, I had always wanted to give the player an option to focus on the game and included a 'zoom' dial from the start.  
+                            What I hadn't realised was that even on laptop screens it had become something of a necessity."
+                        />
+                        <Paragraph 
+                            text="I've made some improvements since and even belatedly tried to help the game work on mobile but in truth I need to give the whole design a second pass. 
+                            Ideally so that it can offer the experience I originally desired for larger screens but also impresses on smaller screens including mobile devices."
+                        />
+                        <Paragraph 
+                            text="If you've got this far and I haven't scared you away with the litany of apologies please give the game a go - the gameplay is much better than the design! It works well and is pretty fun.  I've also added a highscore's table you can get onto if you cash out and make the top ten :)"
+                        />
+                        <Link
+                            href={route("tvset.show")}
+                            className={`rounded-md px-3 font-bold text-zinc-500 ring-1 ring-transparent transition hover:text-orange-400 focus:outline-none focus-visible:ring-[#FF2D20] text-center`}
+                        >
+                            <div className='font-bold text-2xl ml-6'>Play The Game</div>
+                        </Link>
                     </div>
-                </div> :
-                <div className="mx-5 border border-2 p-3">
-                    <div className="flex justify-between border border-2 border-gray-400 p-3 bg-slate-500">
-                        <div className="mx-4 flex justify-start border border-2 p-3 items-center bg-white">
-                            <h2 className="mx-4 flex font-bold text-gray-600">Game Status: <span className="flex mx-4 text-3xl font-bold text-gray-600 items-center">{gameStatus}</span></h2>
-                            {/* <h2 className="mx-4 flex">Round Complete: <span className="flex mx-2 text-4xl font-bold text-gray-600">{roundComplete ? "true" : "false"}</span></h2> */}
-                        </div>
-                        <div className="mx-4 flex justify-end border border-2 p-3 items-center bg-white">
-                            {/* <h2 className="mx-4 flex">Bet: <span className="flex mx-2 text-4xl font-bold text-gray-600">{bet}</span></h2> */}
-                            <FormControl fullWidth>
-                                <InputLabel id="bet-select-label">Bet</InputLabel>
-                                <Select
-                                    labelId="bet-select-label"
-                                    id="bet-select"
-                                    value={bet}
-                                    label="Bet"
-                                    onChange={selectBetValue}
-                                >
-                                    { chipStack >= 100 && <MenuItem value={100}>100</MenuItem> }
-                                    { chipStack >= 200 && <MenuItem value={200}>200</MenuItem> }
-                                    { chipStack >= 300 && <MenuItem value={300}>300</MenuItem> }
-                                    { chipStack >= 400 && <MenuItem value={400}>400</MenuItem> }
-                                    { chipStack >= 500 && <MenuItem value={500}>500</MenuItem> }
-                                    { chipStack >= 600 && <MenuItem value={600}>600</MenuItem> }
-                                    { chipStack >= 700 && <MenuItem value={700}>700</MenuItem> }
-                                    { chipStack >= 800 && <MenuItem value={800}>800</MenuItem> }
-                                    { chipStack >= 900 && <MenuItem value={900}>900</MenuItem> }
-                                    { chipStack >= 1000 && <MenuItem value={1000}>1000</MenuItem> }
-                                    
-                                </Select>
-                            </FormControl>
-                            <h2 className="mx-4 flex border border-2 p-3 font-bold text-gray-600">Chip Stack: <span className="flex mx-2 text-4xl font-bold text-gray-600">{chipStack}</span></h2>
-                        </div>
-                    </div>
-                    <div className="flex my-5 border border-2 p-3 justify-between">
-                        <h2 className=" ml-2 p-3 border border-2 font-bold text-gray-600">Deck:</h2>
-                        {/* <button className="ml-3 btn bg-blue-500 text-white font-bold py-2 px-4 rounded"
-                            onClick={() => shuffleDeck(currentDeck)}
-                        >Shuffle</button> */}
-                        <button className="ml-3 btn bg-sky-900 text-white font-bold py-2 px-4 w-72" 
-                            onClick={() => {
-                                dealHand(currentDeck); 
-                            }}
-                        >Deal</button>
-                        {/* <div className="flex"> */}
-                        <button className="ml-3 btn bg-rose-900 disabled:bg-rose-200 text-white font-bold py-2 px-4 w-72" 
-                        disabled={playerSticking}
-                            onClick={() => 
-                                dealCard(currentDeck, "Player", true)
-                            }
-                        >Hit</button>
-                        <button className="ml-3 btn bg-teal-900 disabled:bg-teal-200 text-white font-bold py-2 px-4 w-72" 
-                            disabled={playerSticking}
-                            onClick={() => {
-                                setPlayerSticking(true); 
-                                playDealerHandAndDetermineWhoWins()
-                            }}
-                        >Stick</button>
-                    {/* </div> */}
-                    </div>
-                    <CardHand 
-                        hand={playerHand} 
-                        player="Player" 
-                        currentTotal={currentTotal} 
-                        dealCard={dealCard} 
-                        showCard={showCard} 
-                        setHand={setPlayerHand} 
-                        currentDeck={currentDeck} 
-                        playerSticking={playerSticking}
-                        setPlayerSticking={setPlayerSticking} 
-                        playDealerHandAndDetermineWhoWins={playDealerHandAndDetermineWhoWins} 
-                    />
-                    <CardHand 
-                        hand={dealerHand} 
-                        player="Dealer" 
-                        currentTotal={currentTotal} 
-                        //dealCard={dealCard} 
-                        showCard={showCard} 
-                        setHand={setDealerHand} 
-                        currentDeck={currentDeck} 
-                    />
-                    {/* <div className="my-5">
-                        <h2 className="mx-2 my-5">Remaining Deck</h2>
-                        <div className="mx-auto flex flex-wrap gap-3 mx-5">
-                            {currentDeck?.map((card) => (
-                                <div className="p-2 rounded border border-grey-600" key={card.id}>
-                                    <p>{card.name} of {card.suit}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div> */}
-                    
-                </div>}
-            {/* </div> */}
+                </div>
+            </div>
+            
         </div>
-        
-    )
+    );
 }

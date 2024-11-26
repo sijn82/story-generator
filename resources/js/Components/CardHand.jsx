@@ -13,7 +13,7 @@ export default function CardHand({
     playDealerHandAndDetermineWhoWins = null,
     zoom = false
 }) {
-
+    console.log(hand)
     return (
         <>
             <div className="flex my-1 border border-2 px-1 py-1 justify-between">
