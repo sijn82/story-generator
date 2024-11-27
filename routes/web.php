@@ -43,20 +43,6 @@ Route::get("/character/{id}", [CharacterController::class, 'show'])->name('chara
 
 Route::get("/blackjack/old", [BlackJackController::class, 'start'])->name('blackjackold.start');
 
-Route::get("tvset", [TVSetController::class, 'show'])->name('tvset.show');
-Route::get("farmer", function () {
-    return Inertia::render('FarmerReplaced');
-})->name("farmer.show");
-Route::get("story-generator", function () {
-    return Inertia::render('StoryGenerator');
-})->name("story-generator.show");
-Route::get("follow-the-white-rabbit", function () {
-    return Inertia::render('FollowTheWhiteRabbit');
-})->name("follow-white-rabbit.show");
-Route::get("blackjack", function () {
-    return Inertia::render("BlackJack");
-})->name("blackjack.show");
-
 Route::post("/highscore/store", [HighScoreController::class, 'store'])->name('highscore.store');
 Route::get("/highscores/{type}", [HighScoreController::class, 'list'])->name('highscores.list');
 
@@ -67,4 +53,21 @@ Route::get("/huggingface", function () {
 
 Route::get("whiterabbit/solve-anagram", [WhiteRabbitController::class, 'generate_secret_phrase'])->name('whiterabbit.solve');
 // Route::get("whiterabbit/test", [WhiteRabbitController::class, 'unusual_words']);
+
+Route::prefix('portfolio')->group(function () {
+    Route::get("tvset", [TVSetController::class, 'show'])->name('tvset.show');
+    Route::get("farmer", function () {
+        return Inertia::render('FarmerReplaced');
+    })->name("farmer.show");
+    Route::get("story-generator", function () {
+        return Inertia::render('StoryGenerator');
+    })->name("story-generator.show");
+    Route::get("follow-the-white-rabbit", function () {
+        return Inertia::render('FollowTheWhiteRabbit');
+    })->name("follow-white-rabbit.show");
+    Route::get("blackjack", function () {
+        return Inertia::render("BlackJack");
+    })->name("blackjack.show");
+});
+
 require __DIR__.'/auth.php';

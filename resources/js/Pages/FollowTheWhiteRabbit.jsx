@@ -14,7 +14,7 @@ export default function FollowTheWhiteRabbit()
                 <div>
                     <SubTitle title="Task" />
                     <div className='text-zinc-600 mb-3'>
-                        <img className="my-6 border-lime-300 border-2" src="http://d1fftu7568zsov.cloudfront.net/follow_the_white_rabbit_task.png" alt="" />
+                        <img className="my-6 border-lime-300 border-2" src="https://d1fftu7568zsov.cloudfront.net/follow_the_white_rabbit_task.png" alt="" />
                     </div>
                     <Paragraph 
                         text="This is their backend challenge, and as Laravel is my go to backend framework, I set up a new controller and got to work.  
@@ -88,7 +88,7 @@ export default function FollowTheWhiteRabbit()
                             text="I really enjoyed this challenge and would love to see how others approached it in PHP/Laravel and whether they found a much more performant solution but this is as far as I intend to go.  It's time to find a new challenge :)"
                         />
                         <div className='text-zinc-600'>
-                            <img className="my-6 border-lime-300 border-2" src="http://d1fftu7568zsov.cloudfront.net/follow_the_white_rabbit_completed.png" alt="" />
+                            <img className="my-6 border-lime-300 border-2" src="https://d1fftu7568zsov.cloudfront.net/follow_the_white_rabbit_completed.png" alt="" />
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@ import { Link, Head } from '@inertiajs/react';
 export default function PortfolioItem ({title, article, link, number}) {
 
     return (
-        <div className="w-full my-12 relative bg-zinc-100 border-2 border-lime-200 px-3">
+        <div className={`w-full my-12 relative ${link ? 'bg-zinc-100' : ''} border-2 border-lime-200 px-3`}>
             <div className='top-4 left-4 absolute text-zinc-500 font-bold border-2 border-lime-200 p-3 w-12 text-center'>{number}</div>
             <div className='mx-12'>
                 <Link

@@ -38,10 +38,10 @@ export default function BlackJack()
                         />
                         <div className="grid grid-cols-2 gap-12 my-6 justify-items-center max-h-64">
                             <div>
-                                <img src="http://d1fftu7568zsov.cloudfront.net/1950-tv-set.jpg" alt="" />
+                                <img src="https://d1fftu7568zsov.cloudfront.net/1950-tv-set.jpg" alt="" />
                             </div>
                             <div>
-                                <img className="w-auto h-4/6 p-3"  src="http://d1fftu7568zsov.cloudfront.net/svg-1950-tv.png" alt="" />
+                                <img className="w-auto h-4/6 p-3"  src="https://d1fftu7568zsov.cloudfront.net/svg-1950-tv.png" alt="" />
                             </div>
 
                         </div>

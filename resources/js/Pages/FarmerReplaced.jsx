@@ -58,7 +58,7 @@ export default function FarmerReplaced() {
                 <div>
                     <SubTitle title="Demo" />
                     <div className='flex justify-center pb-6'>
-                        <video className='border-lime-300 border-2 w-full' controls src="http://d1fftu7568zsov.cloudfront.net/the_farmer_was_replaced_maze_run.mp4"></video>
+                        <video className='border-lime-300 border-2 w-full' controls src="https://d1fftu7568zsov.cloudfront.net/the_farmer_was_replaced_maze_run.mp4"></video>
                     </div>
                 </div>
                 <div>
@@ -71,6 +71,10 @@ export default function FarmerReplaced() {
                         text="Ideally I would like it to make this check without actually moving but I couldn't find a way.  
                         This may be a limitation of my approach and I could reduce the checks by allowing the drone to continue forward as soon as it passes a movement check but for my first attempt at this challenge I was keen to create a solution that adhered to my initial logic before optimising.  
                         In hindsight I could also have taken the approach of making the drone head left of its current orientation whenever blocked which would also succeed in a maze that doesn't contain loops."
+                    />
+                    <Paragraph 
+                        text="Prior to this challenge I had no experience with python but I enjoyed the experience and would like to continue learning it even though I'm not 100% sold on symantic whitespacing. 
+                        That said, another project I'm keen on exploring is Godot and writing in GDScript, which also structures code blocks with indentation - so hopefully it will grow on me."
                     />
                 </div>
             </div>
