@@ -7,13 +7,16 @@ export default function Portfolio() {
 
     return (
         <div className='max-w-screen-lg mx-auto'>
-            <div className="text-center font-bold text-3xl py-9 text-zinc-500">Portfolio Projects</div>
-            <Paragraph 
-                text="Hey, thanks for taking a look and apologies for the current lack of 'wow factor'. As you can probably tell this site was quickly assembled so you had somewhere to go. I have prioritised creating a variety of portfolio projects before I work on a more polished theme."
-            />
-            <Paragraph 
-                text="The list below will continue to grow and I'm really enjoying the excuse to keep coming up with more ideas.  Rather than just show you a link to my repo I'm trying to turn each piece into an article where I break down my thought process but naturally there are code examples in there too."
-            />
+            <div className='px-3 md:px-12 mx-3 md:mx-12 mb-12'>
+                <div className="text-center font-bold text-3xl py-9 text-zinc-500">Portfolio Projects</div>
+                <Paragraph 
+                    text="Hey, thanks for taking a look and apologies for the current lack of 'wow factor'. As you can probably tell this site was quickly assembled so you had somewhere to go. I have prioritised creating a variety of portfolio projects before I work on a more polished theme."
+                />
+                <Paragraph 
+                    text="The list below will continue to grow and I'm really enjoying the excuse to keep coming up with more ideas.  Rather than just show you a link to my repo I'm trying to turn each piece into an article where I break down my thought process but naturally there are code examples in there too."
+                />
+            </div>
+
             {/* <div className="px-12 mx-12 my-6">    
                 As a side note, after building the Black Jack game I prioritised expanding my AWS experience; setting this site up in an ECS2 instance with an RDS MYSQL database and S3 bucket for storage.  
                 I'm also using Github Actions for automated deployment.  Now that the infrastructure is in place and you have something to look at, I'm looking forward to adding the "wow".
