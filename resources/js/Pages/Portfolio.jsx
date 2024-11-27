@@ -48,7 +48,7 @@ export default function Portfolio() {
                 />
                 <PortfolioItem
                     title="Follow The White Rabbit"
-                    article="Trust Pilot have an interesting challenge where you're given a list of 100,000 words, the anagram of a secret phrase and the MD5 hash of the secret phrase.  The task is to create an algorithm which solves the puzzle and there are 3 levels of difficulty.  So far I have solved the easy and medium md5 hashes with only the difficult solution left to go."
+                    article="Trust Pilot have an interesting challenge where you're given a list of 100,000 words, the anagram of a secret phrase and the MD5 hash of the secret phrase.  The task is to create an algorithm which solves the puzzle and there are 3 levels of difficulty."
                     link={route("follow-white-rabbit.show")}
                     number={4}
                 />

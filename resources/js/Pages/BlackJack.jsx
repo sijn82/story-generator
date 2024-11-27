@@ -47,7 +47,7 @@ export default function BlackJack()
                         </div>
                         <Paragraph 
                             text="The code below is for the wood effect svg and I found the trick to increasing saturation was to use feBlend along with the feColourMatrix.  
-                            I spent far too long trying to recreate the mahogany effect and even pulled Copilot into help as I had a subscription at the time but I remained unsatisfied with the results and Copilot was practically useless which surprised me as I'd hoped it was a perfect use case."
+                            I spent far too long trying to recreate the mahogany effect and even pulled Copilot into help as I had a subscription at the time but I remained unsatisfied with the results. Copilot seemed confident it could help but was practically useless, which surprised me as I'd hoped it was a perfect use case."
                         />
                         <div className='my-6 border-lime-300 border-2 text-xs'>
                             <SyntaxHighlighter language="xml" style={docco}>
@@ -59,10 +59,6 @@ export default function BlackJack()
                             text="Another key consideration were the cards themselves.  
                             I considered spending a lot longer on the design but ultimately decided upon something simple.  
                             Also, while the suit wasn't directly necessary to play Black Jack I still felt as though it was an important component."
-                        />
-                        <Paragraph 
-                            text="In a future update I might create special face cards for Jack, Queen, King and Ace as well as colouring the cards depending on suit.
-                            I will also most likely switch to a white background for the card once I add colour; as the current blue was a temporary design choice (originally for the back of the card) which was left until I give the general design a second pass."
                         />
                         <div className="grid grid-cols-4 justify-items-center my-8">
                             <Card 
@@ -144,7 +140,7 @@ export default function BlackJack()
                             Ideally so that it can offer the experience I originally desired for larger screens but also impresses on smaller screens including mobile devices."
                         />
                         <Paragraph 
-                            text="If you've got this far and I haven't scared you away with the litany of apologies please give the game a go - the gameplay is much better than the design! It works well and is pretty fun.  I've also added a highscore's table you can get onto if you cash out and make the top ten :)"
+                            text="If you've got this far then please give the game a go - the gameplay is much better than the design! It works well on larger screens and is pretty fun.  I've also added a highscore's table you can get onto if you cash out and make the top ten :)"
                         />
                         <Link
                             href={route("tvset.show")}
