@@ -14,9 +14,11 @@ export default function FarmerReplaced() {
                 <div>
                     <SubTitle title="Task" />
                     <Paragraph 
-                        text="The challenge is essentially to navigate the drone around a randomly generated maze.  
-                        An important side note is that the maze will not generate looping paths, so following a path will eventually lead to a dead end.  
-                        With this in mind I decided upon a solution which would have the drone calculate the initial directions available to it from its spawn position and then navigate a path until it reached the end, making a note of each junction it encountered along the way."
+                        text="This challenge is to navigate a drone around a randomly generated maze until it finds the treasure.  
+                        An important side note is that the maze will not generate looping paths, so following a path will eventually lead to a dead end."
+                    />
+                    <Paragraph 
+                        text="With this in mind I decided upon a solution which would have the drone calculate the initial directions available to it from its initial spawn position and then navigate a path until it reached the end. Making a note of each junction it encountered along the way."
                     />
                     <Paragraph 
                         text="If the drone didn't encounter the treasure along the first path, it would backtrack to the previous junction and try an alternative path.  
@@ -26,9 +28,23 @@ export default function FarmerReplaced() {
                     <Paragraph 
                         text="One final note is that a completed maze returns to a regular field, so there is a check in place as to what type of entity is below the drone and it will 'fertilize' the ground beneath until it successfully generates a new maze to navigate, creating a loop."
                     />
-                    <SubTitle title="Solution" />
+                    
                 </div>
                 <div>
+                    <SubTitle title="Solution" />
+                    <Paragraph 
+                        text="An important context when looking at my solution, particularly if you're familiar with Python but not the game.  
+                        Is that you need to unlock programming functionality as you go along.  
+                        This has been done to add a light challenge to those familiar with coding but also to give some sense of direction to those who might be encountering these concepts for the first time."
+                    />
+                    <Paragraph 
+                        text="When I initially tried to complete this challenge I hadn't yet unlocked dictionaries but quickly realised I needed a way to store coordinate information and the available routes.  
+                        It's also worth mentioning that not all Python functionality was available to me, so I had to work with what I had."
+                    />
+                    <Paragraph 
+                        text="I also wanted to avoid any potential spoilers or cheat in any way, so I only used the game's progression tree and the python docs where applicable, to help guide my solution."
+                    />
+
                     <div className='my-6 border-lime-300 border-2 text-xs m-auto'>
                         <SyntaxHighlighter language="python" style={docco}>
                             {start_maze}
@@ -69,8 +85,11 @@ export default function FarmerReplaced() {
                     />
                     <Paragraph 
                         text="Ideally I would like it to make this check without actually moving but I couldn't find a way.  
-                        This may be a limitation of my approach and I could reduce the checks by allowing the drone to continue forward as soon as it passes a movement check but for my first attempt at this challenge I was keen to create a solution that adhered to my initial logic before optimising.  
-                        In hindsight I could also have taken the approach of making the drone head left of its current orientation whenever blocked which would also succeed in a maze that doesn't contain loops."
+                        It might have been possible to reduce the number of checks by allowing the drone to continue forward as soon as it passed a movement check.  In effect this would just require me to note the routes taken, rather than the routes available."
+                    />
+                    <Paragraph 
+                        text="However for my first attempt at this challenge I was keen to create a solution that adhered to my initial logic before optimising.  
+                        In hindsight I could also have taken the approach of making the drone head left of its current orientation whenever blocked, which would also succeed in a maze that doesn't contain loops."
                     />
                     <Paragraph 
                         text="Prior to this challenge I had no experience with python but I enjoyed the experience and would like to continue learning it even though I'm not 100% sold on symantic whitespacing. 

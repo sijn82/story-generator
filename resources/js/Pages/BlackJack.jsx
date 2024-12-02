@@ -33,21 +33,21 @@ export default function BlackJack()
                     <div className="">
                         <SubTitle title="TV Set" small={true} indent="ml-10"/>
                         <Paragraph 
-                            text="As the first of many disclaimers here, I wasn't looking to make a direct recreation but merely a version inspired by.
-                            That said, an earlier version of this svg had a much more mahogany feel but was lost and never replicated after an over zealous computer wipe."
+                            text="I wasn't looking to make a direct recreation but merely a version inspired by.
+                            That said, an earlier version of this svg had a much more mahogany feel but it was lost and never replicated after an over zealous computer wipe."
                         />
                         <div className="grid grid-cols-2 gap-12 my-6 justify-items-center max-h-64">
                             <div>
                                 <img src="https://d1fftu7568zsov.cloudfront.net/1950-tv-set.jpg" alt="" />
                             </div>
                             <div>
-                                <img className="w-auto h-4/6 p-3"  src="https://d1fftu7568zsov.cloudfront.net/svg-1950-tv.png" alt="" />
+                                <img className="w-auto h-4/6"  src="https://d1fftu7568zsov.cloudfront.net/svg-1950-tv.png" alt="" />
                             </div>
 
                         </div>
                         <Paragraph 
                             text="The code below is for the wood effect svg and I found the trick to increasing saturation was to use feBlend along with the feColourMatrix.  
-                            I spent far too long trying to recreate the mahogany effect and even pulled Copilot into help as I had a subscription at the time but I remained unsatisfied with the results. Copilot seemed confident it could help but was practically useless, which surprised me as I'd hoped it was a perfect use case."
+                            I spent far too long trying to recreate the mahogany effect and even pulled Copilot in to help as I had a subscription at the time but I remained unsatisfied with the results. Copilot seemed confident in its suggestions but was practically useless, which surprised me as I'd hoped it was a perfect use case."
                         />
                         <div className='my-6 border-lime-300 border-2 text-xs'>
                             <SyntaxHighlighter language="xml" style={docco}>
@@ -113,7 +113,7 @@ export default function BlackJack()
                         <SubTitle title="Black Jack" indent="ml-6"/>
                         <Paragraph 
                             text="When deciding upon which card game I wanted to make, Black Jack stood out as a simple one player game (which could be expanded to include other players once I introduce more comprehensive state management) and actions that could be clearly defined for the dealer.  
-                            They would always pull another card until they reached a 17 or went bust."
+                            They would always pull another card until they reached 17+ or went bust."
                         />
                         <Paragraph 
                             text="The most complicated part of this logic was re-evaluating Aces, so that the card would be worth 11 unless that led to the player going bust.  
@@ -126,27 +126,27 @@ export default function BlackJack()
                         </div>
                         <Paragraph 
                             text="While the gameplay came together pretty easily, I quickly felt hamstring by the design.  
-                            This was due to the early design decision to play the game on a tv set which narrowed the available space considerably."
+                            This was due to the initial decision to play the game on a tv set which narrowed the available space considerably."
                         />
                         <Paragraph 
-                            text="However as I had been building the game while using a large monitor, and as I had never really intended on making it mobile friendly, (despite using a mobile-first/utility-first CSS framework in TailwindCSS) - the extent of the problem was glossed over for too long."
+                            text="However as I had been building the game while using a large monitor, and never really intended on making it mobile friendly, (despite using a mobile-first/utility-first CSS framework in TailwindCSS) - the extent of the problem was glossed over for too long."
                         />
                         <Paragraph 
-                            text="In the back of my mind, I had always wanted to give the player an option to focus on the game and included a 'zoom' dial from the start.  
+                            text="I had always wanted to give the player an option to focus on the game and included a 'zoom' dial from the start.  
                             What I hadn't realised was that even on laptop screens it had become something of a necessity."
                         />
                         <Paragraph 
-                            text="I've made some improvements since and even belatedly tried to help the game work on mobile but in truth I need to give the whole design a second pass. 
+                            text="I've made some improvements since but in truth I need to give the whole design a second pass. 
                             Ideally so that it can offer the experience I originally desired for larger screens but also impresses on smaller screens including mobile devices."
                         />
                         <Paragraph 
-                            text="If you've got this far then please give the game a go - the gameplay is much better than the design! It works well on larger screens and is pretty fun.  I've also added a highscore's table you can get onto if you cash out and make the top ten :)"
+                            text="If you've got this far then please give the game a go! It works well on larger screens and is pretty fun.  I've also added a highscore's table you can get onto if you cash out and make the top ten :)"
                         />
                         <Link
                             href={route("tvset.show")}
                             className={`rounded-md px-3 font-bold text-zinc-500 ring-1 ring-transparent transition hover:text-orange-400 focus:outline-none focus-visible:ring-[#FF2D20] text-center`}
                         >
-                            <div className='font-bold text-2xl ml-6'>Play The Game</div>
+                            <div className='font-bold text-2xl ml-6'>--- Play The Game ---</div>
                         </Link>
                     </div>
                 </div>

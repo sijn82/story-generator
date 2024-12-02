@@ -43,12 +43,13 @@ export default function Welcome({ auth }) {
                                 >
                                     Log in
                                 </Link>
-                                <Link
+                                {/* don't currently need this so commenting out for now */}
+                                {/* <Link
                                     href={route('register')}
                                     className="rounded-md px-3 py-2 font-bold text-black/50 ring-1 ring-transparent transition hover:text-orange-400 focus:outline-none focus-visible:ring-[#FF2D20]"
                                 >
                                     Register
-                                </Link>
+                                </Link> */}
                             </>
                         )}
                     </nav>

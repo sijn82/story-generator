@@ -2,15 +2,19 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import PortfolioItem from '@/Components/PortfolioItem';
 import Paragraph from '@/Components/Paragraph';
+import Bio from '@/Components/Bio';
+import SubTitle from '@/Components/SubTitle';
 
 export default function Portfolio() {
 
     return (
         <div className='max-w-screen-lg mx-auto'>
             <div className='px-3 md:px-12 mx-3 md:mx-12 mb-12'>
-                <div className="text-center font-bold text-3xl py-9 text-zinc-500">Portfolio Projects</div>
+                <Bio />
+                {/* <div className="text-center font-bold text-3xl py-9 text-zinc-500">Portfolio Projects</div> */}
+                <SubTitle title="Portfolio Projects" />
                 <Paragraph 
-                    text="Hey, thanks for taking a look and apologies for the current lack of 'wow factor'. As you can probably tell this site was quickly assembled so you had somewhere to go. I have prioritised creating a variety of portfolio projects before I work on a more polished theme."
+                    text="As you can probably tell this site was quickly assembled so you had somewhere to go. I have prioritised creating a variety of portfolio projects before I work on a more polished theme."
                 />
                 <Paragraph 
                     text="The list below will continue to grow and I'm really enjoying the excuse to keep coming up with more ideas.  Rather than just show you a link to my repo I'm trying to turn each piece into an article where I break down my thought process but naturally there are code examples in there too."
