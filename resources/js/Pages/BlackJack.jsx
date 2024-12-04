@@ -7,6 +7,7 @@ import { wood_effect_svg, calculate_current_total } from "@/Helpers/Text/BlackJa
 import CardHand from "@/Components/CardHand";
 import Card from "@/Components/Card";
 import { Link } from "@inertiajs/react";
+import ReactGA from 'react-ga4';
 
 export default function BlackJack()
 {

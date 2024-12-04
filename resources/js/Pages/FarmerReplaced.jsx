@@ -4,6 +4,7 @@ import { start_maze, navigate_route, next_step, calculate_initial_routes, calcul
 import Title from '@/Components/Title';
 import SubTitle from '@/Components/SubTitle';
 import Paragraph from '@/Components/Paragraph';
+import ReactGA from 'react-ga4';
 
 export default function FarmerReplaced() {
 

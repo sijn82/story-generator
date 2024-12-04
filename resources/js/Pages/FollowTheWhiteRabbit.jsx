@@ -4,6 +4,7 @@ import {convert_file_to_lazy_collection, strip_out_words_not_in_anagram, reduce_
 import Title from '@/Components/Title';
 import SubTitle from '@/Components/SubTitle';
 import Paragraph from '@/Components/Paragraph';
+import ReactGA from 'react-ga4';
 
 export default function FollowTheWhiteRabbit()
 {

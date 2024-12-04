@@ -43,10 +43,10 @@ export default function StoryGenerator()
                     />
                     <SubTitle title="Laravel Prompts" small={true} indent={true} />
                     <div>
-                        <img className="my-6 p-4 border-lime-300 border-2" src="http://d1fftu7568zsov.cloudfront.net/generate_scenarios_1.png" alt="" />
-                        <img className="my-6 p-4 border-lime-300 border-2" src="http://d1fftu7568zsov.cloudfront.net/selected_scenario_1.png" alt="" />
-                        <img className="my-6 p-4 border-lime-300 border-2" src="http://d1fftu7568zsov.cloudfront.net/generate_characters.png" alt="" />
-                        <img className="my-6 p-4 border-lime-300 border-2" src="http://d1fftu7568zsov.cloudfront.net/selected_character.png" alt="" />
+                        <img className="my-6 p-4 border-lime-300 border-2" src="https://d1fftu7568zsov.cloudfront.net/generate_scenarios_1.png" alt="" />
+                        <img className="my-6 p-4 border-lime-300 border-2" src="https://d1fftu7568zsov.cloudfront.net/selected_scenario_1.png" alt="" />
+                        <img className="my-6 p-4 border-lime-300 border-2" src="https://d1fftu7568zsov.cloudfront.net/generate_characters.png" alt="" />
+                        <img className="my-6 p-4 border-lime-300 border-2" src="https://d1fftu7568zsov.cloudfront.net/selected_character.png" alt="" />
                     </div>
                     <SubTitle title="Initial Conclusions" />
                     <Paragraph 

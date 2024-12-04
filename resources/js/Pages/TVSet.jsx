@@ -4,6 +4,7 @@ import Typewriter from '@/Components/Typewriter';
 import { Button } from '@mui/base';
 import BlackJack from '@/Components/BlackJack';
 import TVDials from '@/Components/TVDials';
+import ReactGA from 'react-ga4';
 
 export default function TVSet({ auth, tvShow, deck, high_scores }) {
 
