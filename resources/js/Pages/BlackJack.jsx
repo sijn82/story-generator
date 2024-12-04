@@ -10,6 +10,9 @@ import { Link } from "@inertiajs/react";
 
 export default function BlackJack()
 {
+
+    ReactGA.send({hitType: "pageview", page: window.location.pathname, title: "The Black Jack Article"});
+
     return (
         <div className='max-w-screen-lg mx-auto'>
             <Title title="Black Jack" />

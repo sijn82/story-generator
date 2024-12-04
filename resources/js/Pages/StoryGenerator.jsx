@@ -2,9 +2,13 @@ import Title from '@/Components/Title';
 import SubTitle from '@/Components/SubTitle';
 import Paragraph from '@/Components/Paragraph';
 import Quote from '@/Components/Quote';
+import ReactGA from 'react-ga4';
 
 export default function StoryGenerator()
 {
+
+    ReactGA.send({hitType: "pageview", page: window.location.pathname, title: "Story Generator Article"});
+
     return (
         <div className='max-w-screen-lg mx-auto'>
             <Title title="Story Generator" />

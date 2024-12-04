@@ -7,6 +7,9 @@ import Paragraph from '@/Components/Paragraph';
 
 export default function FollowTheWhiteRabbit()
 {
+
+    ReactGA.send({hitType: "pageview", page: window.location.pathname, title: "Follow The White Rabbit Article"});
+
     return (
         <div className='max-w-screen-lg mx-auto'>
             <Title title="Follow The White Rabbit" />
