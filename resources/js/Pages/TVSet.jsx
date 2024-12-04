@@ -10,6 +10,7 @@ export default function TVSet({ auth, tvShow, deck, high_scores }) {
     const [turnedOn, setTurnedOn] = useState(false); 
     const [startGame, setStartGame] = useState(false);
     const [zoom, setZoom] = useState(false);
+    ReactGA.send({hitType: "pageview", page: window.location.pathname, title: "TV Set Loaded"});
 
     return (
         <div className="h-screen flex flex-col" >

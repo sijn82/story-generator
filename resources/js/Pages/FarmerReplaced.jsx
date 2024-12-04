@@ -7,6 +7,8 @@ import Paragraph from '@/Components/Paragraph';
 
 export default function FarmerReplaced() {
 
+    ReactGA.send({hitType: "pageview", page: window.location.pathname, title: "The Farmer Was Replaced Article"});
+
     return (
         <div className='max-w-screen-lg mx-auto'>
             <Title title="The Farmer Was Replaced" />
