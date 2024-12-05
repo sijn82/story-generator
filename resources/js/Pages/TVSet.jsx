@@ -5,13 +5,18 @@ import { Button } from '@mui/base';
 import BlackJack from '@/Components/BlackJack';
 import TVDials from '@/Components/TVDials';
 import ReactGA from 'react-ga4';
+import { useEffect } from 'react';
 
 export default function TVSet({ auth, tvShow, deck, high_scores }) {
 
     const [turnedOn, setTurnedOn] = useState(false); 
     const [startGame, setStartGame] = useState(false);
     const [zoom, setZoom] = useState(false);
-    ReactGA.send({hitType: "pageview", page: window.location.pathname, title: "TV Set Loaded"});
+    
+    useEffect(() => {
+        ReactGA.send({hitType: "pageview", page: window.location.pathname, title: "TV Set Loaded"});
+    }, [])
+    
 
     return (
         <div className="h-screen flex flex-col" >

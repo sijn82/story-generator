@@ -8,11 +8,14 @@ import CardHand from "@/Components/CardHand";
 import Card from "@/Components/Card";
 import { Link } from "@inertiajs/react";
 import ReactGA from 'react-ga4';
+import { useEffect } from "react";
 
 export default function BlackJack()
 {
-
-    ReactGA.send({hitType: "pageview", page: window.location.pathname, title: "The Black Jack Article"});
+    useEffect(() => {
+        ReactGA.send({hitType: "pageview", page: window.location.pathname, title: "The Black Jack Article"});
+    }, [])
+    
 
     return (
         <div className='max-w-screen-lg mx-auto'>

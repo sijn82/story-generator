@@ -5,10 +5,14 @@ import Title from '@/Components/Title';
 import SubTitle from '@/Components/SubTitle';
 import Paragraph from '@/Components/Paragraph';
 import ReactGA from 'react-ga4';
+import { useEffect } from 'react';
 
 export default function FarmerReplaced() {
 
-    ReactGA.send({hitType: "pageview", page: window.location.pathname, title: "The Farmer Was Replaced Article"});
+    useEffect(() => {
+        ReactGA.send({hitType: "pageview", page: window.location.pathname, title: "The Farmer Was Replaced Article"});
+    }, [])
+    
 
     return (
         <div className='max-w-screen-lg mx-auto'>
