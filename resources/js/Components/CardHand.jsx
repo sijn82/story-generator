@@ -2,12 +2,12 @@ import Card from "./Card";
 
 export default function CardHand({
     hand, 
-    setHand, 
+    // setHand, 
     player, 
     dealCard = null, 
     playerSticking,
     setPlayerSticking = null, 
-    showCard, 
+    // showCard, 
     currentTotal, 
     currentDeck,
     playDealerHandAndDetermineWhoWins = null,
@@ -27,8 +27,8 @@ export default function CardHand({
                     <Card
                         key={card.id}
                         card={card}
-                        showCard={showCard}
-                        setHand={setHand}
+                        // showCard={showCard}
+                        // setHand={setHand}
                         zoom={zoom}
                     />
                 ))}

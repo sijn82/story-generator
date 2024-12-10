@@ -1,5 +1,9 @@
+import useBlackJackStore from '../Store/BlackJackStore';
 
 export default function TVDials({turnedOn, setTurnedOn, startGame, setStartGame, zoom, setZoom}) {
+
+    const resetState = useBlackJackStore((state) => state.resetState);
+
     return (
         <div id="dials" className="justify-between flex h-full items-center px-8">
             <div>
@@ -10,7 +14,7 @@ export default function TVDials({turnedOn, setTurnedOn, startGame, setStartGame,
             </div>
             <div>
                 <h2 className={`text-center font-bold mb-1 border border-1 border-red-900 bg-orange-800 transition-all duration-1000 ${startGame && 'text-white'}`}>Start</h2>
-                <div id="dial-2" className="rounded-full h-16 aspect-square border border-2 border-yellow-700 bg-lime-950 items-center flex" onClick={() => setStartGame(startGame => !startGame )}>
+                <div id="dial-2" className="rounded-full h-16 aspect-square border border-2 border-yellow-700 bg-lime-950 items-center flex" onClick={() => {setStartGame(startGame => !startGame); resetState() }}>
                     <hr width="100%" align="left" className={`transition-all duration-1000 border-yellow-700  ${startGame ? 'rotate-90' : ''}`} />
                 </div>
             </div>

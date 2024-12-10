@@ -1,13 +1,18 @@
 
 
-export default function Card({card, showCard, setHand, zoom}) {
+export default function Card({
+    card, 
+    // showCard, 
+    // setHand, 
+    zoom
+}) {
     return (
         <>
             {/* <div className={`rounded p-0.5 tall:p-2  border border-2 border-gray-400 text-gray-600 ${card.in_play ? 'bg-cyan-700' : 'bg-gray-600'} tall:h-32 medium:h-20 h-16 2xl:h-24 aspect-[3/4] grid grid-rows-4 ${zoom ? 'lg:h-24' : ''}`}  */}
             <div className={`rounded p-0.5 tall:p-2 border-2 border-gray-200 text-gray-600 ${card.in_play ? 'bg-gray-100' : 'bg-gray-600'} tall:h-32 medium:h-20 h-16 2xl:h-24 aspect-[3/4] grid grid-rows-4 ${zoom ? 'lg:h-24' : ''}`} 
                 key={card.id} id={card.id} 
-                onClick={() => 
-                    showCard(card, setHand)
+                onClick={() => {}
+                    // showCard(card, setHand)
             }>
                 <div className={`relative flex row-span-2`}>
                     <div 

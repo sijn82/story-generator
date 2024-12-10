@@ -3,20 +3,42 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useEffect, useState } from "react";
 import TVDials from "./TVDials";
 import GameOver from "./GameOver";
+import useBlackJackStore from '../Store/BlackJackStore';
 
 
 export default function BlackJack({deck, zoom = false, setZoom = null, highScores}) {
 
+    const chipStack = useBlackJackStore((state) => state.chipStack);
+    const updateChipStack = useBlackJackStore((state) => state.updateChipStack);
+    const playerSticking = useBlackJackStore((state) => state.playerSticking);
+    const setPlayerSticking = useBlackJackStore((state) => state.setPlayerSticking);
+    const roundComplete = useBlackJackStore((state) => state.roundComplete);
+    const setRoundComplete = useBlackJackStore((state) => state.setRoundComplete);
+    const gameOver = useBlackJackStore((state) => state.gameOver);
+    const setGameOver = useBlackJackStore((state) => state.setGameOver);
+    const bet = useBlackJackStore((state) => state.bet);
+    const setBet = useBlackJackStore((state) => state.setBet);
+    const gameStatus = useBlackJackStore((state) => state.gameStatus);
+    const setGameStatus = useBlackJackStore((state) => state.setGameStatus);
+    const playerHand = useBlackJackStore((state) => state.playerHand);
+    const dealerHand = useBlackJackStore((state) => state.dealerHand);
+    const resetHands = useBlackJackStore((state) => state.resetHands);
+    const addCardToPlayerHand = useBlackJackStore((state) => state.addCardToPlayerHand);
+    const addCardToDealerHand = useBlackJackStore((state) => state.addCardToDealerHand);
+    // const currentDeck = useBlackJackStore((state) => state.currentDeck);
+    // const setCurrentDeck = useBlackJackStore((state) => state.setCurrentDeck);
+    // const shuffleDeck = useBlackJackStore((state) => state.shuffleDeck);
+
     const [currentDeck, setCurrentDeck] = useState(deck);
     const freshDeck = deck; // resets the deck to the original deck
-    const [playerHand, setPlayerHand] = useState([]);
-    const [dealerHand, setDealerHand] = useState([]);
-    const [bet, setBet] = useState(100);
-    const [chipStack, setChipStack] = useState(5000);
-    const [playerSticking, setPlayerSticking] = useState(true);
-    const [roundComplete, setRoundComplete] = useState(true);
-    const [gameStatus, setGameStatus] = useState('Ready');
-    const [gameOver, setGameOver] = useState(false);
+    // const [playerHand, setPlayerHand] = useState([]);
+    // const [dealerHand, setDealerHand] = useState([]);
+    // const [bet, setBet] = useState(100);
+    // const [chipStack, setChipStack] = useState(5000);
+    // const [playerSticking, setPlayerSticking] = useState(true);
+    // const [roundComplete, setRoundComplete] = useState(true);
+    // const [gameStatus, setGameStatus] = useState('Ready');
+    // const [gameOver, setGameOver] = useState(false);
 
     // notes:
 
@@ -25,14 +47,14 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
     // 3. in_play determines visibility of in play cards but currently all in play cards are visible
     //    so do I need this anymore?
 
-    const shuffleDeck = (deck) => {
+    const shuffleDeck = (deckOfCards) => {
 
-        for (let i = deck.length - 1; i > 0; i--) { 
+        for (let i = deckOfCards.length - 1; i > 0; i--) { 
             const j = Math.floor(Math.random() * (i + 1)); 
-            [deck[i], deck[j]] = [deck[j], deck[i]]; 
+            [deckOfCards[i], deckOfCards[j]] = [deckOfCards[j], deckOfCards[i]]; 
         }
 
-        setCurrentDeck([...deck]);
+        setCurrentDeck([...deckOfCards]);
 
     };
 
@@ -40,20 +62,26 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
         setCurrentDeck([...freshDeck]);
     };
 
+    console.log("Current deck: " + currentDeck.length);
+    console.log("Fresh deck: " + freshDeck.length);
+
     const dealCard = (deck, player, showImmediately = false) => {
 
         const card = deck.pop();
         if (showImmediately) {
             card.in_play = true;
         }
-        setCurrentDeck([...deck]);
+        // setCurrentDeck([...deck]);
 
         if (player === 'Dealer') {
-            setDealerHand(currentHand => [...currentHand, card]);
-            
+            // setDealerHand(currentHand => [...currentHand, card]);
+            addCardToDealerHand(card);
         } else {
-            setPlayerHand(currentHand => [...currentHand, card]);
+            // setPlayerHand(card);
+            addCardToPlayerHand(card);
         }
+
+        
     };
 
     const currentTotal = (hand) => {
@@ -100,25 +128,29 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
 
     const dealHand = (deck) => {
 
+        // setCurrentDeck([...deck]);
+        // shuffleDeck(deck);
         // if the player has no chips left, the game is over
         if (chipStack <= 0) {
             setGameOver(true);
             return;
         }
         // reset the dealer and player hands
-        setDealerHand([]);
-        setPlayerHand([]);
+        resetHands();
         // reset the game and player status
         setRoundComplete(false);
         setPlayerSticking(false);
         setGameStatus('Playing...');
         // take the bet from the chip stack
-        setChipStack(chipStack - bet);
+        updateChipStack(chipStack - bet);
 
         // deal the intitial 2 cards to the player and 1 to the dealer
         dealCard(deck, "Player", true);
         dealCard(deck, "Dealer", true);
         dealCard(deck, "Player", true);
+        // dealCard(deck, true, true);
+        // dealCard(deck, false, true);
+        // dealCard(deck, true, true);
 
     };
 
@@ -136,6 +168,7 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
         // dealer draws cards until they have 17 or more
         if (currentTotal(dealerHand) < 17) {
             dealCard(currentDeck, "Dealer", true);
+            // dealCard(currentDeck, false, true);
 
         } else {
 
@@ -165,15 +198,15 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
                 setGameStatus('Player Busts');
             } else if (dealerTotal > 21) {
                 // dealer busts
-                setChipStack(chipStack + (bet * 2));
+                updateChipStack(chipStack + (bet * 2));
                 setGameStatus('Dealer Busts');
             } else if (playerTotal > dealerTotal) {
                 // player wins
                 if (playerBlackjack) {
-                    setChipStack(chipStack + (bet * 3));
+                    updateChipStack(chipStack + (bet * 3));
                     setGameStatus('Player wins with Black Jack');
                 } else {
-                    setChipStack(chipStack + (bet * 2));
+                    updateChipStack(chipStack + (bet * 2));
                     setGameStatus('Player Wins');
                 }
 
@@ -188,15 +221,15 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
             } else {
                 // draw
                 if (playerBlackjack && dealerBlackjack) {
-                    setChipStack(chipStack + bet);
+                    updateChipStack(chipStack + bet);
                     setGameStatus('Draw with Black Jack');
                 } else if (playerBlackjack) {
-                    setChipStack(chipStack + (bet * 1.5));
+                    updateChipStack(chipStack + (bet * 1.5));
                     setGameStatus('Player wins with Black Jack');
                 } else if (dealerBlackjack) {
                     setGameStatus('Dealer wins with Black Jack');
                 } else {
-                    setChipStack(chipStack + bet);
+                    updateChipStack(chipStack + bet);
                     setGameStatus('Draw');
                 }
                 
@@ -204,6 +237,7 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
 
 
             setRoundComplete(true);
+            console.log("round complete, reset deck");
             resetDeck();
 
         }
@@ -215,15 +249,19 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
     };
 
     useEffect(() => {
-        setCurrentDeck([...deck]);
+        console.log("setting and shuffling deck");
+        setCurrentDeck([...freshDeck]);
         shuffleDeck(currentDeck);
     }, []);
 
     useEffect(() => {
-        shuffleDeck(currentDeck);
+        // shuffleDeck(currentDeck);
+        
         if (bet > chipStack && roundComplete) {
             console.log("bet: " + bet + " greater than chipstack: " + chipStack + " setting bet to chipStack");
             setBet(chipStack);
+        } else if (roundComplete) {
+            shuffleDeck(freshDeck);
         }
     }, [roundComplete]);
 
@@ -257,7 +295,8 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
             {zoom && 
                 <div className="relative m-3 flex justify-center text-gray-700">
                     <button className="absolute w-48 border-2 p-1" onClick={() => setZoom(zoom => !zoom)}>Exit Full Screen</button>
-                </div>}
+                </div>
+            }
             {gameOver ? <GameOver gameStatus={gameStatus} chipStack={chipStack} highScores={highScores} />
                 :
             <div className={`mx-3 p-2 grid grid-cols-4 lg:gap-3 gap-2`}>
@@ -303,6 +342,7 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
                 <div className="flex flex-col items-center row-span-3 my-1 border border-2 p-1 justify-between">
                     <h2 className="text-center text-gray-700 font-bold"> Chip Stack </h2>
                     <div className=" mx-1 flex border border-2 p-2 font-bold text-gray-600 bg-white justify-center items-center">
+                        {/* <p className="flex mx-2 lg:text-xl text-sm font-bold text-gray-600">{chipStack}</p> */}
                         <p className="flex mx-2 lg:text-xl text-sm font-bold text-gray-600">{chipStack}</p>
                     </div>
                     {/* Deck */}
@@ -317,7 +357,8 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
                     <button className="m-2 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white text-xs lg:text-md font-bold py-1 px-2 aspect-square w-1/2 lg:w-1/2" 
                     disabled={playerSticking}
                         onClick={() => 
-                            dealCard(currentDeck, "Player", true)
+                            // dealCard(currentDeck, "Player", true)
+                            dealCard(currentDeck, true, true)
                         }
                     >Hit</button>
                     <button className="m-2 rounded-full btn border-2 bg-cyan-500 disabled:bg-cyan-200 text-white text-xs lg:text-md font-bold py-1 px-2 aspect-square w-1/2 lg:w-1/2" 
@@ -336,8 +377,8 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
                         player="Player" 
                         currentTotal={currentTotal} 
                         dealCard={dealCard} 
-                        showCard={showCard} 
-                        setHand={setPlayerHand} 
+                        // showCard={showCard} 
+                        // setHand={setPlayerHand} 
                         currentDeck={currentDeck} 
                         playerSticking={playerSticking}
                         setPlayerSticking={setPlayerSticking} 
@@ -349,8 +390,8 @@ export default function BlackJack({deck, zoom = false, setZoom = null, highScore
                         player="Dealer" 
                         currentTotal={currentTotal} 
                         //dealCard={dealCard} 
-                        showCard={showCard} 
-                        setHand={setDealerHand} 
+                        // showCard={showCard} 
+                        // setHand={setDealerHand} 
                         currentDeck={currentDeck} 
                         zoom={zoom}
                     />
